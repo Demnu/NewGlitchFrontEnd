@@ -1,5 +1,4 @@
 import React from "react";
-import ReceiptIcon from "@mui/icons-material/Receipt";
 const DashBoardLink = ({ selected, title, icon: Icon }) => {
   return (
     <li
