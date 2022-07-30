@@ -9,8 +9,9 @@ import CalculateIcon from "@mui/icons-material/Calculate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
-import MobileDashboard from "./Components/Dashboard/MobileDashboard";
+import LogoutIcon from '@mui/icons-material/Logout';
 
+import MobileDashboard from "./Components/Dashboard/MobileDashboard";
 function App() {
   const [links, setSelectedLink] = useState([
     { title: "Orders", icon: ReceiptIcon, selected: false },
@@ -18,6 +19,7 @@ function App() {
     { title: "Recipes", icon: MenuBookIcon, selected: false },
     { title: "Products", icon: ShoppingBagIcon, selected: false },
     { title: "Analytics", icon: AutoGraphIcon, selected: false },
+    { title: "Logout", icon: LogoutIcon, selected: false },
   ]);
 
   const selectLink = (linkTitle) => {
