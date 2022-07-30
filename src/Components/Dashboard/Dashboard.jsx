@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
 import DashBoardLink from "./DashboardLink";
@@ -18,8 +18,8 @@ const Dashboard = ({ links, setSelectedLink }) => {
 
   return (
     <>
-      <div className=" h-screen bg-yellow-500  w-52 pt-1">
-        <div className="flex justify-center">
+      <div className=" h-screen bg-yellow-400  w-52 pt-1">
+        <div className="flex bgy justify-center">
           <img src={logo} alt="Glitch" className=" w-2/5" />
         </div>
         <hr className=" border-black shadow-xl" />

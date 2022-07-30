@@ -33,7 +33,6 @@ function App() {
     });
   };
 
-  const [linkName, setLinkName] = useState();
   return (
     <>
       <BrowserRouter>

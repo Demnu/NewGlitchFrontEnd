@@ -55,11 +55,13 @@ const Orders = ({ selectLink }) => {
       },
     },
   ];
+
   return (
     <div className=" bg-slate-100 h-screen flex flex-col  ">
       <div className=" w-auto flex justify-center">
         <CalculateButton selectedOrders={selectedOrders} />
       </div>
+
       <div className=" flex-grow bg-white mx-2  ">
         <DataGrid
           loading={loading}
