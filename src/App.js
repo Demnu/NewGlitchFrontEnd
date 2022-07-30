@@ -37,15 +37,24 @@ function App() {
     <>
       <BrowserRouter>
         <div className="flex">
-          <Dashboard links={links} setSelectedLink={setSelectedLink} />
-          <Routes>
-            <Route path="orders" element={<Orders selectLink={selectLink} />} />
-            <Route
-              path="calculations"
-              element={<Calucations selectLink={selectLink} />}
-            />
-            <Route path="*" element={<p>Hi</p>} />
-          </Routes>
+          <Dashboard
+            className="flex-none"
+            links={links}
+            setSelectedLink={setSelectedLink}
+          />
+          <div className="flex-grow">
+            <Routes>
+              <Route
+                path="orders"
+                element={<Orders selectLink={selectLink} />}
+              />
+              <Route
+                path="calculations"
+                element={<Calucations selectLink={selectLink} />}
+              />
+              <Route path="*" element={<p>Hi</p>} />
+            </Routes>
+          </div>
         </div>
       </BrowserRouter>
     </>
