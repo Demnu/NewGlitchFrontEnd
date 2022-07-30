@@ -9,6 +9,7 @@ import CalculateIcon from "@mui/icons-material/Calculate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
+import MobileDashboard from "./Components/Dashboard/MobileDashboard";
 
 function App() {
   const [links, setSelectedLink] = useState([
@@ -36,6 +37,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <MobileDashboard links={links} setSelectedLink={setSelectedLink}/>
         <div className="flex">
           <div className="flex-none">
           <Dashboard

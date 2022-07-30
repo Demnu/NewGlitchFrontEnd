@@ -18,11 +18,11 @@ const Dashboard = ({ links, setSelectedLink }) => {
 
   return (
     <>
-      <div className="h-screen bg-yellow-400 pt-1 w-52 ">
+      <div className="hidden  dashboard:block  h-screen bg-yellow-400 pt-1 w-48 ">
         <div className="flex justify-center">
           <img src={logo} alt="Glitch" className=" w-2/5" />
         </div>
-        <div>
+        <div className="">
           <hr className=" border-black shadow-xl" />
           <ul className="flex flex-col">
             {links.map((link, index) => (
