@@ -4,7 +4,7 @@ const Calculations = ({ selectLink }) => {
 
   return (
     <div className=" text-white">
-      <span>Calculations</span>
+      <span className="">Calculations</span>
     </div>
   );
 };

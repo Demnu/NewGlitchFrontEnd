@@ -37,11 +37,13 @@ function App() {
     <>
       <BrowserRouter>
         <div className="flex">
+          <div className="flex-none">
           <Dashboard
-            className="flex-none"
             links={links}
             setSelectedLink={setSelectedLink}
           />
+          </div>
+
           <div className="flex-grow">
             <Routes>
               <Route
