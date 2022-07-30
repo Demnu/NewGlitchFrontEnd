@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-const Orders = ({ selectLink }) => {
+const Calucations = ({ selectLink }) => {
   useEffect(() => {
-    selectLink("Orders");
+    selectLink("Calculations");
   }, []);
 
   return (
     <div className=" text-white">
-      <span>ORDERS</span>
+      <span>Calculations</span>
     </div>
   );
 };
-export default Orders;
+export default Calucations;

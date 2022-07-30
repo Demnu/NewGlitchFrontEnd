@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Orders from "./Components/Orders/Orders";
+import Calucations from "./Components/Calculations/Calculations";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -27,7 +28,6 @@ function App() {
           link.selected = false;
         }
       }
-      newLinks[0].selected = true;
       return newLinks;
     });
   };
@@ -40,6 +40,10 @@ function App() {
           <Dashboard links={links} setSelectedLink={setSelectedLink} />
           <Routes>
             <Route path="orders" element={<Orders selectLink={selectLink} />} />
+            <Route
+              path="calculations"
+              element={<Calucations selectLink={selectLink} />}
+            />
             <Route path="*" element={<p>Hi</p>} />
           </Routes>
         </div>
