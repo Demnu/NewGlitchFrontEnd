@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import CalculateButton from "./CalculateButton";
 import { getOrders } from "../../myApi";
-
 const Orders = ({ selectLink }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,6 @@ const Orders = ({ selectLink }) => {
 
   const handleSelection = (item) => {
     setSelectedOrders(item);
-    console.log(item);
   };
 
   const columns = [
@@ -57,20 +56,10 @@ const Orders = ({ selectLink }) => {
     },
   ];
   return (
-    <div className=" bg-slate-100 h-screen flex flex-col ">
-      <div className="flex justify-center">
-        <button
-          disabled={selectedOrders.length <= 0}
-          className={`${
-            selectedOrders.length <= 0
-              ? " bg-gray-300 text-gray-500"
-              : "bg-blue-700 hover:bg-blue-500 "
-          } w-4/6 rounded-md py-2 text-white m-1 `}
-        >
-          {selectedOrders.length > 0 ? "Calculate Orders" : "Select Orders"}
-        </button>
+    <div className=" bg-slate-100 h-screen flex flex-col  ">
+      <div className=" w-auto flex justify-center">
+        <CalculateButton selectedOrders={selectedOrders} />
       </div>
-
       <div className=" flex-grow bg-white mx-2  ">
         <DataGrid
           loading={loading}
