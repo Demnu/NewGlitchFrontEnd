@@ -3,12 +3,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Orders from "./Components/Orders/Orders";
-import Calucations from "./Components/Calculations/Calculations";
+import Calculations from "./Components/Calculations/Calculations";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
+
 function App() {
   const [links, setSelectedLink] = useState([
     { title: "Orders", icon: ReceiptIcon, selected: false },
@@ -50,7 +51,7 @@ function App() {
               />
               <Route
                 path="calculations"
-                element={<Calucations selectLink={selectLink} />}
+                element={<Calculations selectLink={selectLink} />}
               />
               <Route path="*" element={<p>Hi</p>} />
             </Routes>

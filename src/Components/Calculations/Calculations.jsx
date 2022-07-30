@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-const Calucations = ({ selectLink }) => {
-  useEffect(() => {
-    selectLink("Calculations");
-  }, []);
+const Calculations = ({ selectLink }) => {
+  useEffect(() => {}, []);
 
   return (
     <div className=" text-white">
@@ -10,4 +8,4 @@ const Calucations = ({ selectLink }) => {
     </div>
   );
 };
-export default Calucations;
+export default Calculations;
