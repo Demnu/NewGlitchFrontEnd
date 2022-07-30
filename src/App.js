@@ -1,10 +1,14 @@
 import "./App.css";
 import React, { useState } from "react";
+import Dashboard from "./Components/Dashboard/Dashboard";
 function App() {
 
   return (
     <>
-    <h1>Glitch App</h1>
+    <div className="flex">
+      <Dashboard/>
+
+    </div>
 
     </>
   );
