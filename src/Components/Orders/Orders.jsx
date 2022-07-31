@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import CalculateButton from "./CalculateButton";
 import { getOrders } from "../../myApi";
+import RoastingList from "./RoastingList/RoastingList";
 const Orders = ({ selectLink }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedOrders, setSelectedOrders] = useState([]);
+  const [showRoastingList, setShowRoastingList] = useState(false);
   useEffect(() => {
     selectLink("Orders");
     const res = getOrders();
@@ -56,22 +58,34 @@ const Orders = ({ selectLink }) => {
     },
   ];
 
+  const calculateOrdersOnClickHandler = () => {
+    setShowRoastingList(true);
+  };
+
   return (
     <div className=" bg-slate-100 h-screen flex flex-col  ">
-      <div className=" w-auto flex justify-center">
-        <CalculateButton selectedOrders={selectedOrders} />
-      </div>
+      {!showRoastingList && (
+        <>
+          <div className=" w-auto flex justify-center">
+            <CalculateButton
+              onClick={calculateOrdersOnClickHandler}
+              selectedOrders={selectedOrders}
+            />
+          </div>
 
-      <div className=" flex-grow bg-white mx-2  ">
-        <DataGrid
-          loading={loading}
-          rows={orders}
-          columns={columns}
-          checkboxSelection
-          density="compact"
-          onSelectionModelChange={(item) => handleSelection(item)}
-        />
-      </div>
+          <div className=" flex-grow bg-white mx-2  ">
+            <DataGrid
+              loading={loading}
+              rows={orders}
+              columns={columns}
+              checkboxSelection
+              density="compact"
+              onSelectionModelChange={(item) => handleSelection(item)}
+            />
+          </div>
+        </>
+      )}
+      {showRoastingList && <RoastingList selectedOrders={selectedOrders} />}
     </div>
   );
 };

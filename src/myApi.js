@@ -11,6 +11,12 @@ const  getOrders = async (params) =>{
     return response
 
 }
+
+const makeCalculation = async(params)=>{
+    const response = await instance.post('/roasting/makeCalculation',{orderIDs:params})
+    return response;
+}
 export{
-    getOrders
+    getOrders,
+    makeCalculation
 }

@@ -31,8 +31,6 @@ const MobileDashboard = ({ links, setSelectedLink }) => {
               key={index}
               to={link.title.toLowerCase()}
             >
-              {console.log(link)}
-
               <p className=" mt-2">{link.title}</p>
             </Link>
           ))}
