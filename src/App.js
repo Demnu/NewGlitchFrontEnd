@@ -50,7 +50,7 @@ function App() {
             />
           </div>
 
-          <div className="flex-grow">
+          <div className="flex-grow overflow-y-auto overflow-x-auto bg-slate-100">
             <Routes>
               <Route
                 path="orders"

@@ -63,7 +63,7 @@ const Orders = ({ selectLink }) => {
   };
 
   return (
-    <div className=" bg-slate-100 h-screen flex flex-col  ">
+    <div className="  h-screen flex flex-col  ">
       {!showRoastingList && (
         <>
           <div className=" w-auto flex justify-center">

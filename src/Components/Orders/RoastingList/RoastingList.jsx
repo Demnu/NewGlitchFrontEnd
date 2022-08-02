@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { makeCalculation } from "../../../myApi";
-import BeanTable from "./BeanTable";
+import BeanTable from "./Tables/BeanTable";
+import OrderTable from "./Tables/OrderTable";
+import ProductTable from "./Tables/ProductTable";
+
 const RoastingList = ({ selectedOrders }) => {
-  const [loading, setLoading] = useState();
-  const [order, setOrder] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
   const [beans, setBeans] = useState([]);
 
   function compareProducts(productA, productB) {
@@ -22,63 +25,44 @@ const RoastingList = ({ selectedOrders }) => {
     res.then((result) => {
       const data = result.data;
       setLoading(false);
-      var ordersArray = data[1];
-      ordersArray.sort(compareProducts);
-      setOrder(ordersArray);
+      var productsArray = data[1];
+      productsArray.sort(compareProducts);
+      setProducts(data[1]);
       var beansData = data[0];
-      var beansStr = [];
-
-      for (var i = 0; i < beansData.length; i++) {
-        var bean = {
-          id: beansData[i].name,
-          amount: beansData[i].amount + " kg",
-        };
-        beansStr.push(bean);
-      }
-      beansStr.sort(compareBeans);
-      setBeans(beansStr);
+      beansData.sort(compareBeans);
+      setBeans(beansData);
+      setBeans(beansData);
+      console.log(data[1]);
     });
   }, []);
-  // useEffect(() => {
-  //     fetch("https://glitchhub.coffee/api/v1/roasting/makeCalculation", {
-  //       credentials: "include",
-  //       method: "POST",
-  //       mode: "cors",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         // 'Content-Type': 'application/x-www-form-urlencoded',
-  //       },
-  //       body: JSON.stringify({ orderIDs: location.state }), // body data type must match "Content-Type" header
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setLoading(false);
-  //         var ordersArray = data[1];
-  //         ordersArray.sort(compareProducts);
-  //         setOrder(ordersArray);
-  //         var beansData = data[0];
-  //         var beansStr = [];
-
-  //         for (var i = 0; i < beansData.length; i++) {
-  //           var bean = {
-  //             id: beansData[i].name,
-  //             amount: beansData[i].amount + " kg",
-  //           };
-  //           beansStr.push(bean);
-  //         }
-  //         beansStr.sort(compareBeans);
-  //         setBeans(beansStr);
-  //       });
-  //     var orderIDS = [];
-  //     location.state.forEach((id) => {
-  //       orderIDS.push({ id: id });
-  //     });
-  //     setOrderIDs(orderIDS);
-  //   }, []);
   return (
-    <div>
-      <BeanTable beans={beans} />
-    </div>
+    <>
+      <div className="flex justify-center">
+        <button
+          className={
+            "bg-blue-700 hover:bg-blue-500 w-3/6 rounded-md py-2 text-white m-1 text-center"
+          }
+        >
+          Calculate Orders
+        </button>
+      </div>
+
+      <div className="mx-2 flex gap-4 py-5 h-screen">
+        {!loading && (
+          <>
+            <div className=" bg-white rounded-md h-min">
+              <OrderTable orders={selectedOrders} />
+            </div>
+            <div className=" bg-white rounded-md  h-min">
+              <BeanTable beans={beans} />
+            </div>
+            <div className=" bg-white rounded-md h-min">
+              <ProductTable products={products} />
+            </div>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 export default RoastingList;
