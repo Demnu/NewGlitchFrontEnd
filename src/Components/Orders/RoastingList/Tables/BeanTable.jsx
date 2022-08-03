@@ -12,7 +12,7 @@ const BeanTable = ({ beans, loading }) => {
   let newBeansArray = [];
   for (let bean of beansArray) {
     let newBeanAmount = bean.amount.toFixed(2);
-    newBeansArray.push({ id: bean.name, amount: newBeanAmount });
+    newBeansArray.push({ id: bean.name || bean.id, amount: newBeanAmount });
   }
 
   // const columns = useMemo(() => getBeansColumns(), []);

@@ -13,6 +13,7 @@ import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import MobileDashboard from "./Components/Dashboard/MobileDashboard";
+import Calculation from "./Components/Calculations/Calculation/Calculation";
 function App() {
   const [links, setSelectedLink] = useState([
     { title: "Orders", icon: ReceiptIcon, selected: false },
@@ -60,7 +61,12 @@ function App() {
                 path="calculations"
                 element={<Calculations selectLink={selectLink} />}
               />
+              <Route
+                  path="/calculations/:calculationID"
+                  element={<Calculation/>}
+                />
               <Route path="*" element={<p>Hi</p>} />
+
             </Routes>
           </div>
         </div>

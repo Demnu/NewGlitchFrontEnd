@@ -125,10 +125,10 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
         navigate("/calculations/" + String(_id), {
           state: {
             _id: _id,
-            title: results.data.orderIDs,
+            title: results.data.title,
             date: results.data.date,
             orderIDs: results.data.orderIDs,
-            products: results.data.results,
+            products: results.data.products,
             beans: results.data.beans,
           },
         });
