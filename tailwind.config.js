@@ -7,6 +7,7 @@ module.exports = {
     },
     screens: {
       'dashboard':'700px',
+      'tableMax': {'max': '790'},
       'tableMin':'790px',
       'sm': '640px',
       // => @media (min-width: 640px) { ... }

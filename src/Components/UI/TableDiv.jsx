@@ -30,32 +30,28 @@ const Table = ({ columns, data, title }) => {
         <div className="flex justify-center">
           <h1 className=" my-2 text-xl whitespace-nowrap">{title}</h1>
         </div>
-        <div className="break-words ">
-          <table className="table-fixed rounded-lg  ">
-            <thead className=" ">
+        <div className="flex flex-col h-48 ">
+          {/* tableheaders */}
+          <div>
+            {columnHeaders.map((header, index) => (
+              <th
+                className="px-4 py-2 font-medium text-left whitespace-nowrap "
+                key={index}
+              >
+                {header}
+              </th>
+            ))}
+          </div>
+
+          <div className="overflow-y-auto flex-grow">
+            {rows.map((row, index) => (
               <tr>
-                {columnHeaders.map((header, index) => (
-                  <th
-                    className="px-4 py-2 font-medium text-left whitespace-nowrap "
-                    key={index}
-                  >
-                    {header}
-                  </th>
+                {row.map((value) => (
+                  <td className=" border-b-2  px-4 py-2">{value}</td>
                 ))}
               </tr>
-            </thead>
-            <tbody className="overflow-y-auto ">
-              {rows.map((row, index) => (
-                <tr>
-                  {row.map((value) => (
-                    <td className=" border-b-2 border-t-2 px-4 py-2">
-                      {value}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            ))}
+          </div>
         </div>
       </div>
     </>

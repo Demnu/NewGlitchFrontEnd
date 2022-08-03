@@ -1,9 +1,9 @@
 import React, { useMemo, useEffect, useState } from "react";
 import Table from "../../../UI/Table";
 import { getOrdersColumns } from "./ColumnData";
-
-const OrderTable = ({ orders }) => {
-  const columns = useMemo(() => getOrdersColumns(), []);
+import { DataGrid } from "@mui/x-data-grid";
+const columns = [{ field: "id", headerName: "Orders", width: 50, flex: 1 }];
+const OrderTable = ({ orders, loading }) => {
   const [ordersObj, setOrdersObj] = useState([]);
   useEffect(() => {
     let newOrdersObj = [];
@@ -16,7 +16,13 @@ const OrderTable = ({ orders }) => {
   return (
     <>
       {ordersObj.length > 0 && (
-        <Table title={"Orders"} columns={columns} data={ordersObj} />
+        <DataGrid
+          rows={ordersObj}
+          columns={columns}
+          disableSelectionOnClick={true}
+          rowsPerPageOptions={[]}
+          density={"compact"}
+        />
       )}
     </>
   );

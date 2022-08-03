@@ -3,8 +3,57 @@ import { makeCalculation } from "../../../myApi";
 import BeanTable from "./Tables/BeanTable";
 import OrderTable from "./Tables/OrderTable";
 import ProductTable from "./Tables/ProductTable";
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import TablePickerButton from "./TablePickerButton";
+import { useReducer } from "react";
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
+const DisplayTableReducer = (state, action) => {
+  switch (action.type) {
+    case "showOrderIDs":
+      return {
+        showOrderIDs: true,
+        showRoastingList: false,
+        showProductsList: false,
+      };
+    case "showRoastingList":
+      return {
+        showOrderIDs: false,
+        showRoastingList: true,
+        showProductsList: false,
+      };
+    case "showProductTally":
+      return {
+        showOrderIDs: false,
+        showRoastingList: false,
+        showProductsList: true,
+      };
+    default:
+      return {
+        showOrderIDs: false,
+        showRoastingList: true,
+        showProductsList: false,
+      };
+  }
+};
 const RoastingList = ({ selectedOrders }) => {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [beans, setBeans] = useState([]);
@@ -30,38 +79,92 @@ const RoastingList = ({ selectedOrders }) => {
       setProducts(data[1]);
       var beansData = data[0];
       beansData.sort(compareBeans);
+
       setBeans(beansData);
-      setBeans(beansData);
-      console.log(data[1]);
     });
   }, []);
+  const [displayTableState, displayTableStateDispatch] = useReducer(
+    DisplayTableReducer,
+    {
+      showOrderIDs: false,
+      showRoastingList: true,
+      showProductsList: false,
+    }
+  );
+  const showOrderIds = () => {};
   return (
     <>
-      <div className="flex justify-center">
-        <button
-          className={
-            "bg-blue-700 hover:bg-blue-500 w-3/6 rounded-md py-2 text-white m-1 text-center"
-          }
-        >
-          Calculate Orders
-        </button>
-      </div>
-
-      <div className="mx-2 flex gap-4 py-5 h-screen">
-        {!loading && (
-          <>
-            <div className=" bg-white rounded-md h-min">
-              <OrderTable orders={selectedOrders} />
+      {windowDimensions.width > 790 && (
+        <>
+          <div className="flex justify-center">
+            <button
+              className={
+                "bg-blue-700 hover:bg-blue-500 w-3/6 rounded-md py-2 text-white m-1 text-center"
+              }
+            >
+              Calculate Orders
+            </button>
+          </div>
+          <div className={`mx-2 flex gap-2 pb-2 h-screen`}>
+            <>
+              <div className=" bg-white rounded-md w-3/12 ">
+                <OrderTable orders={selectedOrders} loading={loading} />
+              </div>
+              <div className=" bg-white rounded-md w-2/6 ">
+                <BeanTable beans={beans} loading={loading} />
+              </div>
+              <div className=" bg-white rounded-md  w-3/6 ">
+                <ProductTable products={products} loading={loading} />
+              </div>
+            </>
+          </div>
+        </>
+      )}
+      {windowDimensions.width <= 790 && (
+        <>
+          <div className="">
+            <div className="flex justify-center mb-1  mx-auto w-5/6 tableMin:mb-1 tableMin">
+              <TablePickerButton
+                selected={displayTableState.showOrderIDs}
+                title={"Order ID's"}
+                rounded="rounded-bl-md"
+                onClick={() => {
+                  displayTableStateDispatch({ type: "showOrderIDs" });
+                }}
+              />
+              <TablePickerButton
+                selected={displayTableState.showRoastingList}
+                title={"Roasting List"}
+                border="border-l-2 border-r-2"
+                onClick={() => {
+                  displayTableStateDispatch({ type: "showRoastingList" });
+                }}
+              />
+              <TablePickerButton
+                selected={displayTableState.showProductsList}
+                title={"Product Tally"}
+                rounded="rounded-br-md"
+                onClick={() => {
+                  displayTableStateDispatch({ type: "showProductTally" });
+                }}
+              />
             </div>
-            <div className=" bg-white rounded-md  h-min">
-              <BeanTable beans={beans} />
+          </div>
+          <div className=" ml-2 flex justify-center flex-grow">
+            <div className=" bg-white rounded-md ">
+              {displayTableState.showOrderIDs && (
+                <OrderTable orders={selectedOrders} loading={loading} />
+              )}
+              {displayTableState.showRoastingList && (
+                <BeanTable beans={beans} loading={loading} />
+              )}
+              {displayTableState.showProductsList && (
+                <ProductTable products={products} loading={loading} />
+              )}
             </div>
-            <div className=" bg-white rounded-md h-min">
-              <ProductTable products={products} />
-            </div>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
