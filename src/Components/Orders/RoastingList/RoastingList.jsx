@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { makeCalculation, saveCalculation } from "../../../myApi";
 import BeanTable from "./Tables/BeanTable";
 import OrderTable from "./Tables/OrderTable";
@@ -103,6 +105,8 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
     useState("Save Calculation");
   const [saveCalculationButtonDisabled, setSaveCalculationButtonDisabled] =
     useState(true);
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (calculationTitle.trim().length > 0) {
       const response = saveCalculation({
@@ -111,10 +115,27 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
         products,
         beans,
       });
-      response.then(() => {
+      setSaveCalculationButtonDisabled(true);
+
+      response.then((results) => {
+        const _id = results.data._id;
         setSaveCalculationButtonDisabled(true);
         setSaveCalculationButtonTitle("Calculation Saved");
         setCalculationTitle("");
+        navigate("/calculations/" + String(_id), {
+          state: {
+            _id: _id,
+            title: results.data.orderIDs,
+            date: results.data.date,
+            orderIDs: results.data.orderIDs,
+            products: results.data.results,
+            beans: results.data.beans,
+          },
+        });
+      });
+      response.catch(() => {
+        setSaveCalculationButtonDisabled(false);
+        setSaveCalculationButtonTitle("ERROR! Please save again");
       });
     }
   }, [calculationTitle]);

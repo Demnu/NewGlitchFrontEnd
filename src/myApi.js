@@ -20,8 +20,6 @@ const makeCalculation = async(params)=>{
 const saveCalculation = async({title,orderIDs, products, beans}) =>{
     let newOrderIDs  = [];
     let newBeans = [];
-
-    console.log(products)
     for (let order of orderIDs){
         newOrderIDs.push({id:order})
     }

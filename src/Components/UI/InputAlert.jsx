@@ -5,14 +5,16 @@ import ReactDOM from "react-dom";
 const InputAlert = ({ title, description, cancel, setInput }) => {
   const Message = () => {
     const [tempInput, setTempInput] = useState("");
+    const [error, setError] = useState(false);
     const onInputChangeHandler = (event) => {
+      setError("");
       setTempInput(event.target.value);
     };
 
     return (
       <>
         <div className="z-40 fixed top-0 left-0 w-screen h-screen bg-black opacity-50 "></div>
-        <div className="flex justify-center">
+        <div className="flex justify-center ">
           <div className="z-50 	 fixed top-40 max-w-lg mx-auto rounded-lg overflow-hidden shadow-lg text-black bg-white  ">
             <div className=" px-3 py-1 bg-zinc-700  text-2xl text-white text-center">
               {title}
@@ -20,6 +22,8 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
             <p className="px-3 py-1" key={Math.random()}>
               {description}
             </p>
+            {error.length > 0 && <p className=" text-red-500">{error}</p>}
+
             <form>
               <div className="flex px-2">
                 <input
@@ -27,7 +31,10 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
                   onChange={onInputChangeHandler}
                   type="text"
                   value={tempInput}
-                  className=" flex-grow border border-slate-200 rounded-sm pl-1  focus:outline-none focus:border-blue-700 hover:border-yellow-500 bg-slate-200 "
+                  className={`flex-grow border border-slate-200 rounded-sm pl-1  focus:outline-none focus:border-blue-700 hover:border-blue-400 bg-slate-200 ${
+                    error.length > 0 &&
+                    "border-red-600 hover:border-red-600 focus:border-red-600"
+                  } `}
                 />
               </div>
 
@@ -36,10 +43,17 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
                   type="submit"
                   onClick={(event) => {
                     event.preventDefault();
-                    setInput(tempInput);
-                    cancel();
+
+                    if (tempInput.trim().length > 0) {
+                      setInput(tempInput);
+                      cancel();
+                    } else {
+                      setTempInput("");
+                      setError("Title must have at least one character");
+                    }
                   }}
-                  className=" flex-grow bg-blue-700 hover:bg-blue-500 w-2/6 py-1   text-white text-center text-lg border-black rounded-md "
+                  className={`flex-grow bg-blue-700 hover:bg-blue-500 w-2/6 py-1 text-white text-center text-lg rounded-md
+                  }`}
                 >
                   Save
                 </button>
