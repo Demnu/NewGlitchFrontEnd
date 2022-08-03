@@ -2,7 +2,8 @@ import React from "react";
 import BeanTable from "../../Orders/RoastingList/Tables/BeanTable";
 import ProductTable from "../../Orders/RoastingList/Tables/ProductTable";
 import OrderTable from "../../Orders/RoastingList/Tables/OrderTable";
-import RoastingListPDF from "./RoastingListPDF";
+import RoastingListPDF from "./ExportToPDFS/RoastingListPDF";
+import ProductTallyPDF from "./ExportToPDFS/ProductTallyPDF";
 const CalculationDesktop = ({ calculation }) => {
   return (
     <div className=" h-screen flex flex-col px-2 py-2 ">
@@ -16,6 +17,7 @@ const CalculationDesktop = ({ calculation }) => {
         </div>
       </div>
       <RoastingListPDF beans={calculation.beans} />
+      <ProductTallyPDF products={calculation.products} />
       <div className="flex-grow flex gap-2">
         <div className=" bg-white rounded-md w-3/12 ">
           <OrderTable orders={calculation.orderIDs} loading={false} />
