@@ -96,15 +96,23 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
     <>
       {windowDimensions.width > 1200 && (
         <>
-          <div className="flex justify-center">
+          <div className="flex justify-center w-5/6 mx-auto mb-2">
             <button
-              className={
-                "bg-blue-700 hover:bg-blue-500 w-3/6 rounded-md py-2 text-white m-1 text-center"
-              }
+              onClick={() => {
+                setShowRoastingList(false);
+              }}
+              className=" bg-zinc-400 hover:bg-zinc-500 w-1/12 py-1  text-white text-center text-lg border-black rounded-bl-md   "
             >
-              Calculate Orders
+              Back
+            </button>
+            <button
+              type=""
+              className=" bg-green-700 hover:bg-green-800 w-2/6 py-1  text-white text-center text-lg border-black rounded-br-md    "
+            >
+              Save Calculation
             </button>
           </div>
+
           <div className={`mx-2 flex gap-2 pb-2 h-screen`}>
             <>
               <div className=" bg-white rounded-md w-3/12 ">
@@ -157,8 +165,8 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
                 }}
               />
               {/* <TablePickerButton title={"Export PDF"} /> */}
-              <button className=" bg-blue-600 hover:bg-blue-700 w-2/6 py-1  text-white text-center text-lg border-black rounded-br-md   ">
-                Export PDF
+              <button className=" bg-green-700 hover:bg-green-800 w-2/6 py-1  text-white text-center text-lg border-black rounded-br-md   ">
+                Save Calculation
               </button>
             </div>
           </div>
