@@ -64,28 +64,35 @@ const Orders = ({ selectLink }) => {
 
   return (
     <div className="  h-screen flex flex-col  ">
-      {!showRoastingList && (
-        <>
-          <div className=" w-auto flex justify-center">
-            <CalculateButton
-              onClick={calculateOrdersOnClickHandler}
-              selectedOrders={selectedOrders}
-            />
-          </div>
+      <div className={`h-screen flex flex-col ${showRoastingList && "hidden"}`}>
+        <div className=" w-auto flex justify-center">
+          <CalculateButton
+            onClick={calculateOrdersOnClickHandler}
+            selectedOrders={selectedOrders}
+          />
+        </div>
 
-          <div className=" flex-grow bg-white mx-2  ">
-            <DataGrid
-              loading={loading}
-              rows={orders}
-              columns={columns}
-              checkboxSelection
-              density="compact"
-              onSelectionModelChange={(item) => handleSelection(item)}
-            />
-          </div>
-        </>
-      )}
-      {showRoastingList && <RoastingList selectedOrders={selectedOrders} />}
+        <div className=" flex-grow bg-white mx-2  ">
+          <DataGrid
+            loading={loading}
+            rows={orders}
+            columns={columns}
+            checkboxSelection
+            density="compact"
+            onSelectionModelChange={(item) => handleSelection(item)}
+          />
+        </div>
+      </div>
+      <div
+        className={`${!showRoastingList && " hidden"} h-screen flex flex-col`}
+      >
+        {showRoastingList && (
+          <RoastingList
+            selectedOrders={selectedOrders}
+            setShowRoastingList={setShowRoastingList}
+          />
+        )}
+      </div>
     </div>
   );
 };

@@ -42,7 +42,7 @@ const DisplayTableReducer = (state, action) => {
       };
   }
 };
-const RoastingList = ({ selectedOrders }) => {
+const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
@@ -94,7 +94,7 @@ const RoastingList = ({ selectedOrders }) => {
   const showOrderIds = () => {};
   return (
     <>
-      {windowDimensions.width > 790 && (
+      {windowDimensions.width > 1200 && (
         <>
           <div className="flex justify-center">
             <button
@@ -120,22 +120,29 @@ const RoastingList = ({ selectedOrders }) => {
           </div>
         </>
       )}
-      {windowDimensions.width <= 790 && (
+      {windowDimensions.width <= 1200 && (
         <>
           <div className="">
-            <div className="flex justify-center mb-1  mx-auto w-5/6 tableMin:mb-1 tableMin">
+            <div className="flex justify-center w-5/6 mb-1 divide-x-2  mx-auto shadow-lg ">
+              <button
+                onClick={() => {
+                  setShowRoastingList(false);
+                }}
+                className=" bg-zinc-400 hover:bg-zinc-500 w-2/6 py-1  text-white text-center text-lg border-black rounded-bl-md   "
+              >
+                Back
+              </button>
               <TablePickerButton
                 selected={displayTableState.showOrderIDs}
                 title={"Order ID's"}
-                rounded="rounded-bl-md"
                 onClick={() => {
                   displayTableStateDispatch({ type: "showOrderIDs" });
                 }}
               />
+
               <TablePickerButton
                 selected={displayTableState.showRoastingList}
                 title={"Roasting List"}
-                border="border-l-2 border-r-2"
                 onClick={() => {
                   displayTableStateDispatch({ type: "showRoastingList" });
                 }}
@@ -143,15 +150,20 @@ const RoastingList = ({ selectedOrders }) => {
               <TablePickerButton
                 selected={displayTableState.showProductsList}
                 title={"Product Tally"}
-                rounded="rounded-br-md"
+                rounded=""
+                color="blue"
                 onClick={() => {
                   displayTableStateDispatch({ type: "showProductTally" });
                 }}
               />
+              {/* <TablePickerButton title={"Export PDF"} /> */}
+              <button className=" bg-blue-600 hover:bg-blue-700 w-2/6 py-1  text-white text-center text-lg border-black rounded-br-md   ">
+                Export PDF
+              </button>
             </div>
           </div>
-          <div className=" ml-2 flex justify-center flex-grow">
-            <div className=" bg-white rounded-md ">
+          <div className=" mx-2 flex justify-center flex-grow">
+            <div className=" bg-white rounded-md flex-grow mt-4">
               {displayTableState.showOrderIDs && (
                 <OrderTable orders={selectedOrders} loading={loading} />
               )}

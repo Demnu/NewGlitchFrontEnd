@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useState } from "react";
 import Table from "../../../UI/Table";
 import { getOrdersColumns } from "./ColumnData";
 import { DataGrid } from "@mui/x-data-grid";
-const columns = [{ field: "id", headerName: "Orders", width: 50, flex: 1 }];
+const columns = [{ field: "id", headerName: "Order ID's", width: 50, flex: 1 }];
 const OrderTable = ({ orders, loading }) => {
   const [ordersObj, setOrdersObj] = useState([]);
   useEffect(() => {
