@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeCalculation } from "../../../myApi";
+import { makeCalculation, saveCalculation } from "../../../myApi";
 import BeanTable from "./Tables/BeanTable";
 import OrderTable from "./Tables/OrderTable";
 import ProductTable from "./Tables/ProductTable";
@@ -7,12 +7,26 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import TablePickerButton from "./TablePickerButton";
 import { useReducer } from "react";
+import InputAlert from "../../UI/InputAlert";
+import SaveCalculationButton from "./SaveCalculationButton";
+import userEvent from "@testing-library/user-event";
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
     width,
     height,
   };
+}
+function compareProducts(productA, productB) {
+  var stringA = String(productA.id);
+  var stringB = String(productB.id);
+  return stringA.localeCompare(stringB);
+}
+
+function compareBeans(productA, productB) {
+  var stringA = String(productA.id);
+  var stringB = String(productB.id);
+  return stringA.localeCompare(stringB);
 }
 const DisplayTableReducer = (state, action) => {
   switch (action.type) {
@@ -58,28 +72,17 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
   const [products, setProducts] = useState([]);
   const [beans, setBeans] = useState([]);
 
-  function compareProducts(productA, productB) {
-    var stringA = String(productA.id);
-    var stringB = String(productB.id);
-    return stringA.localeCompare(stringB);
-  }
-
-  function compareBeans(productA, productB) {
-    var stringA = String(productA.id);
-    var stringB = String(productB.id);
-    return stringA.localeCompare(stringB);
-  }
   useEffect(() => {
     const res = makeCalculation(selectedOrders);
     res.then((result) => {
       const data = result.data;
       setLoading(false);
+      setSaveCalculationButtonDisabled(false);
       var productsArray = data[1];
       productsArray.sort(compareProducts);
       setProducts(data[1]);
       var beansData = data[0];
       beansData.sort(compareBeans);
-
       setBeans(beansData);
     });
   }, []);
@@ -91,9 +94,42 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
       showProductsList: false,
     }
   );
-  const showOrderIds = () => {};
+  const [savingCalculation, setSavingCalculation] = useState(false);
+  const [calculationTitle, setCalculationTitle] = useState("");
+  const saveCalculationHandler = () => {
+    setSavingCalculation(true);
+  };
+  const [saveCalculationButtonTitle, setSaveCalculationButtonTitle] =
+    useState("Save Calculation");
+  const [saveCalculationButtonDisabled, setSaveCalculationButtonDisabled] =
+    useState(true);
+  useEffect(() => {
+    if (calculationTitle.trim().length > 0) {
+      const response = saveCalculation({
+        title: calculationTitle,
+        orderIDs: selectedOrders,
+        products,
+        beans,
+      });
+      response.then(() => {
+        setSaveCalculationButtonDisabled(true);
+        setSaveCalculationButtonTitle("Calculation Saved");
+        setCalculationTitle("");
+      });
+    }
+  }, [calculationTitle]);
+
   return (
     <>
+      {savingCalculation && (
+        <InputAlert
+          setInput={setCalculationTitle}
+          title={"Save Calculation"}
+          description="Please enter a calculation title"
+          cancel={setSavingCalculation}
+        />
+      )}
+
       {windowDimensions.width > 1200 && (
         <>
           <div className="flex justify-center w-5/6 mx-auto mb-2">
@@ -101,16 +137,15 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
               onClick={() => {
                 setShowRoastingList(false);
               }}
-              className=" bg-zinc-400 hover:bg-zinc-500 w-1/12 py-1  text-white text-center text-lg border-black rounded-bl-md   "
+              className=" bg-gray-300 text-gray-500 hover:bg-gray-200 w-1/12 rounded-md py-2  m-1 text-center   "
             >
               Back
             </button>
-            <button
-              type=""
-              className=" bg-green-700 hover:bg-green-800 w-2/6 py-1  text-white text-center text-lg border-black rounded-br-md    "
-            >
-              Save Calculation
-            </button>
+            <SaveCalculationButton
+              title={saveCalculationButtonTitle}
+              onClick={saveCalculationHandler}
+              loading={saveCalculationButtonDisabled}
+            />
           </div>
 
           <div className={`mx-2 flex gap-2 pb-2 h-screen`}>
@@ -165,7 +200,10 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
                 }}
               />
               {/* <TablePickerButton title={"Export PDF"} /> */}
-              <button className=" bg-green-700 hover:bg-green-800 w-2/6 py-1  text-white text-center text-lg border-black rounded-br-md   ">
+              <button
+                onClick={() => {}}
+                className=" bg-blue-700 hover:bg-blue-500 w-2/6 py-1  text-white text-center text-lg border-black rounded-br-md   "
+              >
                 Save Calculation
               </button>
             </div>
