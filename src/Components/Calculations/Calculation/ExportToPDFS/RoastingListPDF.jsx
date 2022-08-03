@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import ExportButton from "./ExportButton";
 
 const RoastingListPDF = ({ beans }) => {
   const [dataObject, setDataObject] = useState();
@@ -45,15 +46,9 @@ const RoastingListPDF = ({ beans }) => {
     setDataObject(reformattedBeans);
   }, []);
   return (
-    <button
-      className="bg-blue-700 hover:bg-blue-500 w-4/6 rounded-md py-2 text-white m-1 text-center"
-      onClick={() => {
-        exportPDF();
-      }}
-    >
-      {" "}
+    <ExportButton className="" onClick={exportPDF}>
       Export Roasting List
-    </button>
+    </ExportButton>
   );
 };
 export default RoastingListPDF;

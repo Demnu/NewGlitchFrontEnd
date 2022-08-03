@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import ExportButton from "./ExportButton";
 
 const ProductTallyPDF = ({ products }) => {
   const [dataObject, setDataObject] = useState();
@@ -34,16 +35,6 @@ const ProductTallyPDF = ({ products }) => {
     doc.save("Product_Tally_" + newdate + ".pdf");
   };
 
-  return (
-    <button
-      className="bg-blue-700 hover:bg-blue-500 w-4/6 rounded-md py-2 text-white m-1 text-center"
-      onClick={() => {
-        exportPDF();
-      }}
-    >
-      {" "}
-      Export Product Tally
-    </button>
-  );
+  return <ExportButton onClick={exportPDF}>Export Product Tally</ExportButton>;
 };
 export default ProductTallyPDF;
