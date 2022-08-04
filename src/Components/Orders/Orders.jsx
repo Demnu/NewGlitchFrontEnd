@@ -72,7 +72,7 @@ const Orders = ({ selectLink }) => {
           />
         </div>
 
-        <div className=" flex-grow bg-white mx-2  ">
+        <div className=" flex-grow bg-white mx-2 rounded-sm mb-2 ">
           <DataGrid
             loading={loading}
             rows={orders}

@@ -51,11 +51,11 @@ function App() {
             />
           </div>
 
-          <div className="flex-grow overflow-y-auto overflow-x-auto bg-slate-100">
+          <div className="flex-grow overflow-y-auto overflow-x-auto bg-slate-200 ">
             <Routes>
               <Route
                 path="orders"
-                element={<Orders selectLink={selectLink} />}
+                element={<Orders selectLink={selectLink} key={new Date} />}
               />
               <Route
                 path="calculations"

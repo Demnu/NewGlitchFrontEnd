@@ -7,7 +7,7 @@ import ProductTallyPDF from "./ExportToPDFS/ProductTallyPDF";
 const CalculationDesktop = ({ calculation }) => {
   return (
     <div className=" h-screen flex flex-col px-2 py-2 ">
-      <div className="flex gap-4 pb-1">
+      <div className="flex gap-4 pb-1 text-white">
         <div>
           <span className=" font-bold">Calculation: </span>
           {calculation.title}

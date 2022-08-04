@@ -10,8 +10,8 @@ import "jspdf-autotable";
 import TablePickerButton from "./TablePickerButton";
 import { useReducer } from "react";
 import InputAlert from "../../UI/InputAlert";
-import SaveCalculationButton from "./SaveCalculationButton";
 import userEvent from "@testing-library/user-event";
+import RoastingListDesktop from "./RoastingListDesktop";
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
@@ -116,7 +116,7 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
         beans,
       });
       setSaveCalculationButtonDisabled(true);
-
+      setSaveCalculationButtonTitle("SAVING CALCULATION");
       response.then((results) => {
         const _id = results.data._id;
         setSaveCalculationButtonDisabled(true);
@@ -152,37 +152,16 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
       )}
 
       {windowDimensions.width > 1200 && (
-        <>
-          <div className="flex justify-center w-5/6 mx-auto mb-2">
-            <button
-              onClick={() => {
-                setShowRoastingList(false);
-              }}
-              className=" bg-gray-300 text-gray-500 hover:bg-gray-200 w-1/12 rounded-md py-2  m-1 text-center   "
-            >
-              Back
-            </button>
-            <SaveCalculationButton
-              title={saveCalculationButtonTitle}
-              onClick={saveCalculationHandler}
-              loading={saveCalculationButtonDisabled}
-            />
-          </div>
-
-          <div className={`mx-2 flex gap-2 pb-2 h-screen`}>
-            <>
-              <div className=" bg-white rounded-md w-3/12 ">
-                <OrderTable orders={selectedOrders} loading={loading} />
-              </div>
-              <div className=" bg-white rounded-md w-2/6 ">
-                <BeanTable beans={beans} loading={loading} />
-              </div>
-              <div className=" bg-white rounded-md  w-3/6 ">
-                <ProductTable products={products} loading={loading} />
-              </div>
-            </>
-          </div>
-        </>
+        <RoastingListDesktop
+          setShowRoastingList={setShowRoastingList}
+          saveCalculationButtonTitle={saveCalculationButtonTitle}
+          saveCalculationHandler={saveCalculationHandler}
+          saveCalculationButtonDisabled={saveCalculationButtonDisabled}
+          loading={loading}
+          products={products}
+          selectedOrders={selectedOrders}
+          beans={beans}
+        />
       )}
       {windowDimensions.width <= 1200 && (
         <>

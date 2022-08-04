@@ -53,7 +53,7 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
                       setError("Title must have at least one character");
                     }
                   }}
-                  className={`flex-grow bg-blue-700 hover:bg-blue-500 w-2/6 py-1 text-white text-center text-lg rounded-md
+                  className={`flex-grow bg-blue-700 hover:bg-blue-500 w-2/6 py-1 text-white text-center text-lg rounded-sm
                   }`}
                 >
                   Save
@@ -65,7 +65,7 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
                 onClick={() => {
                   cancel();
                 }}
-                className=" flex-grow bg-gray-300 text-gray-500 hover:bg-gray-200 w-2/6 py-1  text-center text-lg border-black rounded-md "
+                className=" flex-grow bg-gray-300 text-gray-500 hover:bg-gray-200 w-2/6 py-1  text-center text-lg border-black rounded-sm "
               >
                 Cancel
               </button>
