@@ -4,7 +4,14 @@ import ProductTable from "../../Orders/RoastingList/Tables/ProductTable";
 import OrderTable from "../../Orders/RoastingList/Tables/OrderTable";
 import RoastingListPDF from "./ExportToPDFS/RoastingListPDF";
 import ProductTallyPDF from "./ExportToPDFS/ProductTallyPDF";
+import { deleteCalculation } from "../../../myApi";
+import { useNavigate } from "react-router-dom";
 const CalculationDesktop = ({ calculation }) => {
+  const navigate = useNavigate();
+  const deleteClickHandler = (id) => {
+    deleteCalculation({ calculationID: id });
+    navigate("/calculations");
+  };
   return (
     <div className=" h-screen flex flex-col px-2 py-2 ">
       <div className="flex gap-4 pb-1 text-black">
@@ -22,7 +29,12 @@ const CalculationDesktop = ({ calculation }) => {
           <ProductTallyPDF products={calculation.products} />
         </div>
         <div className=" w-4/12 flex justify-end">
-          <button className=" bg-red-700 hover:bg-red-500 rounded-sm py-2 px-6  text-white m-1 text-center">
+          <button
+            onClick={() => {
+              deleteClickHandler(calculation._id);
+            }}
+            className=" bg-red-700 hover:bg-red-500 rounded-sm py-2 px-6  text-white m-1 text-center"
+          >
             Delete
           </button>
         </div>
