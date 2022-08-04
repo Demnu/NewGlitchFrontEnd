@@ -5,6 +5,7 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import Orders from "./Components/Orders/Orders";
 import Calculations from "./Components/Calculations/Calculations";
 import Recipes from "./Components/Recipes/Recipes";
+import Recipe from "./Components/Recipes/Recipe/Recipe";
 
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import CalculateIcon from "@mui/icons-material/Calculate";
@@ -67,6 +68,7 @@ function App() {
                 element={<Calculation />}
               />
               <Route path="/recipes" element={<Recipes />} />
+              <Route path="/recipes/:recipeID" element={<Recipe />} />
               <Route path="*" element={<p>Hi</p>} />
             </Routes>
           </div>
