@@ -6,7 +6,6 @@ const columns = [{ field: "id", headerName: "Order ID's", width: 50, flex: 1 }];
 const OrderTable = ({ orders, loading }) => {
   const [ordersObj, setOrdersObj] = useState([]);
   useEffect(() => {
-    console.log(orders);
     let hasId = false;
     let newOrdersObj = [];
 

@@ -35,15 +35,20 @@ const RoastingListPDF = ({ beans }) => {
     doc.save("Roasting_List_" + newdate + ".pdf");
   };
   useEffect(() => {
-    let reformattedBeans = [];
-    for (let bean of beans) {
-      let newBeanAmount = bean.amount.toFixed(2);
-      reformattedBeans.push({
-        id: bean.name || bean.id,
-        amount: newBeanAmount,
-      });
+    let beansArray = beans;
+    let newBeansArray = [];
+    for (let bean of beansArray) {
+      let newBeanAmount;
+      if (isNaN(bean.amount)) {
+        newBeanAmount = Number(bean.amount.replace(" kg", ""));
+        newBeanAmount = newBeanAmount.toFixed(2);
+      } else {
+        newBeanAmount = bean.amount.toFixed(2);
+      }
+      newBeansArray.push({ id: bean.name || bean.id, amount: newBeanAmount });
     }
-    setDataObject(reformattedBeans);
+
+    setDataObject(newBeansArray);
   }, []);
   return (
     <ExportButton className="" onClick={exportPDF}>

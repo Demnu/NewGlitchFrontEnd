@@ -6,7 +6,7 @@ const CalculateButton = ({ selectedOrders, onClick }) => {
       <div
         disabled={true}
         className={
-          "bg-gray-300 text-gray-500 w-4/6 rounded-md py-2  m-1 text-center"
+          "bg-gray-300 text-gray-500 w-4/6 rounded-sm py-2  m-1 text-center"
         }
       >
         Select Orders

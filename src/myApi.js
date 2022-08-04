@@ -40,8 +40,15 @@ const saveCalculation = async({title,orderIDs, products, beans}) =>{
 
 }
 
+const getCalculations = async(params)=>{
+    const response = await instance.get('/roasting')
+    return response;
+}
+
+
 export{
     getOrders,
     makeCalculation,
-    saveCalculation
+    saveCalculation,
+    getCalculations,
 }

@@ -22,7 +22,7 @@ const RoastingListDesktop = ({
             onClick={() => {
               setShowRoastingList(false);
             }}
-            className=" bg-gray-300 text-gray-500 hover:bg-gray-200 flex-grow rounded-sm py-2  m-1 text-center   "
+            className=" bg-gray-300 text-gray-500 hover:bg-gray-100 flex-grow rounded-sm py-2  m-1 text-center   "
           >
             Add/Remove Orders
           </button>

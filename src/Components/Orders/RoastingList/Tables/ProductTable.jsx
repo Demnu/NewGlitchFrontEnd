@@ -1,6 +1,4 @@
-import React, { useMemo, forwardRef, useState, useEffect } from "react";
-import Table from "../../../UI/Table";
-import { getBeansColumns } from "./ColumnData";
+import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 const columns = [
   { field: "id", headerName: "Product", width: 300 },
@@ -17,8 +15,6 @@ const ProductTable = ({ products, loading }) => {
         disableSelectionOnClick={true}
         density={"compact"}
       />
-
-      {/* <Table title={"Products"} columns={columns} data={products} /> */}
     </>
   );
 };
