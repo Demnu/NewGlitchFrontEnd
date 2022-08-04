@@ -49,10 +49,16 @@ const deleteCalculation = async (params) => {
   return response;
 };
 
+const getRecipes = async (params) => {
+  const response = await instance.get("/recipes");
+  return response;
+};
+
 export {
   getOrders,
   makeCalculation,
   saveCalculation,
   getCalculations,
   deleteCalculation,
+  getRecipes
 };

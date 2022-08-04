@@ -4,11 +4,12 @@ import React, { useState } from "react";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Orders from "./Components/Orders/Orders";
 import Calculations from "./Components/Calculations/Calculations";
+import Recipes from "./Components/Recipes/Recipes";
 
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+// import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
 
@@ -19,7 +20,7 @@ function App() {
     { title: "Orders", icon: ReceiptIcon, selected: false },
     { title: "Calculations", icon: CalculateIcon, selected: false },
     { title: "Recipes", icon: MenuBookIcon, selected: false },
-    { title: "Products", icon: ShoppingBagIcon, selected: false },
+    // { title: "Products", icon: ShoppingBagIcon, selected: false },
     { title: "Analytics", icon: AutoGraphIcon, selected: false },
     { title: "Logout", icon: LogoutIcon, selected: false },
   ]);
@@ -55,18 +56,18 @@ function App() {
             <Routes>
               <Route
                 path="orders"
-                element={<Orders selectLink={selectLink} key={new Date} />}
+                element={<Orders selectLink={selectLink} key={new Date()} />}
               />
               <Route
                 path="calculations"
                 element={<Calculations selectLink={selectLink} />}
               />
               <Route
-                  path="/calculations/:calculationID"
-                  element={<Calculation/>}
-                />
+                path="/calculations/:calculationID"
+                element={<Calculation />}
+              />
+              <Route path="/recipes" element={<Recipes />} />
               <Route path="*" element={<p>Hi</p>} />
-
             </Routes>
           </div>
         </div>
