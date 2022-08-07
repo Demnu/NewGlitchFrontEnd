@@ -58,7 +58,7 @@ const getBeansArray = (recipe) => {
   return savedBeansArray;
 };
 
-const Recipe = () => {
+const Recipe = (selectLink) => {
   const location = useLocation();
   const [recipe, setRecipe] = useState(location.state);
   const [savedBeans, setSavedBeans] = useState([]);

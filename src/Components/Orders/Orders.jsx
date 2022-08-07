@@ -65,7 +65,7 @@ const Orders = ({ selectLink }) => {
   return (
     <div className="  h-screen flex flex-col  ">
       <div className={`h-screen flex flex-col ${showRoastingList && "hidden"}`}>
-        <div className=" w-auto flex justify-center">
+        <div className=" my-2 mx-2 flex start">
           <CalculateButton
             onClick={calculateOrdersOnClickHandler}
             selectedOrders={selectedOrders}

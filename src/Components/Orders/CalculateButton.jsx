@@ -6,7 +6,7 @@ const CalculateButton = ({ selectedOrders, onClick }) => {
       <div
         disabled={true}
         className={
-          "bg-gray-300 text-gray-500 w-4/6 rounded-sm py-2  m-1 text-center"
+          "bg-gray-300 text-gray-500 w-52 rounded-sm py-2  m-1 text-center"
         }
       >
         Select Orders
@@ -17,7 +17,7 @@ const CalculateButton = ({ selectedOrders, onClick }) => {
       <button
         onClick={onClick}
         className={
-          "bg-blue-700 hover:bg-blue-500 w-4/6 rounded-sm py-2 text-white m-1 text-center"
+          "bg-blue-700 hover:bg-blue-500 w-52 rounded-sm py-2 text-white m-1 text-center"
         }
       >
         Calculate Orders

@@ -16,6 +16,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import MobileDashboard from "./Components/Dashboard/MobileDashboard";
 import Calculation from "./Components/Calculations/Calculation/Calculation";
+import Topbar from "./Components/Dashboard/Topbar";
 function App() {
   const [links, setSelectedLink] = useState([
     { title: "Orders", icon: ReceiptIcon, selected: false },
@@ -44,6 +45,7 @@ function App() {
     <>
       <BrowserRouter>
         <MobileDashboard links={links} setSelectedLink={setSelectedLink} />
+        <Topbar />
         <div className="flex">
           <div className="flex-none">
             <Dashboard
@@ -53,7 +55,10 @@ function App() {
             />
           </div>
 
-          <div className="flex-grow overflow-y-auto overflow-x-auto bg-slate-200 ">
+          <div className="flex-grow overflow-y-auto overflow-x-auto bg-zinc-200 ">
+            {/* <div className=" w-auto py-7 bg-slate-200 "></div> */}
+            {/* <hr className=" border-slate-300 shadow-2xl" /> */}
+
             <Routes>
               <Route
                 path="orders"
@@ -67,8 +72,16 @@ function App() {
                 path="/calculations/:calculationID"
                 element={<Calculation />}
               />
-              <Route path="/recipes" element={<Recipes />} />
-              <Route path="/recipes/:recipeID" element={<Recipe />} />
+              <Route
+                path="/recipes"
+                selectLink={selectLink}
+                element={<Recipes />}
+              />
+              <Route
+                path="/recipes/:recipeID"
+                selectLink={selectLink}
+                element={<Recipe />}
+              />
               <Route path="*" element={<p>Hi</p>} />
             </Routes>
           </div>

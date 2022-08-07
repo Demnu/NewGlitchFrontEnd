@@ -16,7 +16,7 @@ const RoastingListDesktop = ({
 }) => {
   return (
     <>
-      <div className="flex justify-between w-5/6 mx-auto">
+      {/* <div className="flex justify-between w-5/6 mx-auto">
         <div className=" flex w-3/12">
           <button
             onClick={() => {
@@ -34,6 +34,21 @@ const RoastingListDesktop = ({
           loading={saveCalculationButtonDisabled}
         />
         <div className=" w-3/12"></div>
+      </div> */}
+      <div className="flex ml-2 my-2 gap-1">
+        <SaveCalculationButton
+          title={saveCalculationButtonTitle}
+          onClick={saveCalculationHandler}
+          loading={saveCalculationButtonDisabled}
+        />
+        <button
+          onClick={() => {
+            setShowRoastingList(false);
+          }}
+          className=" bg-gray-300 text-gray-500 hover:bg-gray-100  rounded-sm py-2 w-52  m-1 text-center   "
+        >
+          Change Orders
+        </button>
       </div>
 
       <div className={` ml-2 flex gap-2 pb-2 h-screen`}>
