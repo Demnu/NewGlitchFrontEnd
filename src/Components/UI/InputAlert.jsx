@@ -15,14 +15,18 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
       <>
         <div className="z-40 fixed top-0 left-0 w-screen h-screen bg-black opacity-50 "></div>
         <div className="flex justify-center ">
-          <div className="z-50 	 fixed top-40 max-w-lg mx-auto  rounded overflow-hidden shadow-lg text-black bg-white  ">
+          <div className="z-50  flex flex-col	 fixed top-40 w-80 mx-auto  rounded overflow-hidden shadow-lg text-black bg-white  ">
             <div className=" px-3 py-1 bg-zinc-700  text-2xl text-white text-center">
               {title}
             </div>
-            <p className="px-3 py-1" key={Math.random()}>
-              {description}
-            </p>
-            {error.length > 0 && <p className=" text-red-500">{error}</p>}
+            <div className="flex flex-col px-3 py-1 ">
+              <p className="" key={Math.random()}>
+                {description}
+              </p>
+              {error.length > 0 && (
+                <p className="flex-none text-red-500">*{error}</p>
+              )}
+            </div>
 
             <form>
               <div className="flex px-2">
