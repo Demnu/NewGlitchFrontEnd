@@ -15,8 +15,8 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
       <>
         <div className="z-40 fixed top-0 left-0 w-screen h-screen bg-black opacity-50 "></div>
         <div className="flex justify-center ">
-          <div className="z-50  flex flex-col	 fixed top-40 w-80 mx-auto  rounded overflow-hidden shadow-lg text-black bg-white  ">
-            <div className=" px-3 py-1 bg-zinc-700  text-2xl text-white text-center">
+          <div className="z-50  flex flex-col	 fixed top-40 w-80 mx-auto  rounded overflow-hidden shadow-lg text-black bg-white pb-2    ">
+            <div className=" px-3 py-1 bg-zinc-800  text-2xl text-slate-200 text-center">
               {title}
             </div>
             <div className="flex flex-col px-3 py-1 ">
@@ -64,7 +64,7 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
                 </button>
               </div>
             </form>
-            <div className="my-2 px-3 flex ">
+            <div className="my-1 px-3 flex ">
               <button
                 onClick={() => {
                   cancel();

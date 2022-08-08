@@ -24,7 +24,7 @@ const CalculationDesktop = ({ calculation }) => {
         </div>
       </div>
       <div className="flex justify-centre mb-1">
-        <div className="flex w-8/12 justify-start">
+        <div className="flex w-8/12 justify-start py-1 gap-2">
           <RoastingListPDF beans={calculation.beans} />
           <ProductTallyPDF products={calculation.products} />
         </div>
