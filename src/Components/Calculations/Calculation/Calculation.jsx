@@ -48,7 +48,7 @@ const Calculation = () => {
     }
   }, []);
   return (
-    <div className="h-screen">
+    <div className="restOfScreenHeight">
       {windowDimensions.width > 1200 && calculation._id && (
         <CalculationDesktop calculation={calculation} />
       )}

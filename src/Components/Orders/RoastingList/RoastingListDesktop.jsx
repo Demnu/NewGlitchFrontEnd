@@ -35,7 +35,7 @@ const RoastingListDesktop = ({
         />
         <div className=" w-3/12"></div>
       </div> */}
-      <div className="flex ml-2 my-2 gap-1">
+      <div className="flex gap-1 my-2 ">
         <SaveCalculationButton
           title={saveCalculationButtonTitle}
           onClick={saveCalculationHandler}
@@ -51,7 +51,7 @@ const RoastingListDesktop = ({
         </button>
       </div>
 
-      <div className={` ml-2 flex gap-2 pb-2 h-screen`}>
+      <div className={`flex gap-2 flex-grow mb-2`}>
         <>
           <div className=" bg-white rounded-md w-3/12 ">
             <OrderTable orders={selectedOrders} loading={loading} />

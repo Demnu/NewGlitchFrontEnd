@@ -21,7 +21,7 @@ const Calculations = ({}) => {
   }, []);
 
   return (
-    <div className=" h-screen flex flex-col px-2 py-2">
+    <div className=" restOfScreenHeight flex flex-col px-2 py-2">
       <div className=" flex-grow bg-white rounded-sm cursor-pointer">
         <CalculationsTable loading={loading} calculations={calculations} />
       </div>

@@ -13,7 +13,7 @@ const CalculationDesktop = ({ calculation }) => {
     navigate("/calculations");
   };
   return (
-    <div className=" h-screen flex flex-col px-2 py-2 ">
+    <div className=" restOfScreenHeight flex flex-col px-2 py-2 ">
       <div className="flex gap-4 pb-1 text-black">
         <div>
           <span className=" font-bold">Calculation: </span>

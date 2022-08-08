@@ -152,16 +152,18 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
       )}
 
       {windowDimensions.width > 1200 && (
-        <RoastingListDesktop
-          setShowRoastingList={setShowRoastingList}
-          saveCalculationButtonTitle={saveCalculationButtonTitle}
-          saveCalculationHandler={saveCalculationHandler}
-          saveCalculationButtonDisabled={saveCalculationButtonDisabled}
-          loading={loading}
-          products={products}
-          selectedOrders={selectedOrders}
-          beans={beans}
-        />
+        <div className="restOfScreenHeight flex flex-col">
+          <RoastingListDesktop
+            setShowRoastingList={setShowRoastingList}
+            saveCalculationButtonTitle={saveCalculationButtonTitle}
+            saveCalculationHandler={saveCalculationHandler}
+            saveCalculationButtonDisabled={saveCalculationButtonDisabled}
+            loading={loading}
+            products={products}
+            selectedOrders={selectedOrders}
+            beans={beans}
+          />
+        </div>
       )}
       {windowDimensions.width <= 1200 && (
         <>

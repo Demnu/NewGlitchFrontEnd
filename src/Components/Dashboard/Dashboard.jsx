@@ -18,7 +18,7 @@ const Dashboard = ({ links, setSelectedLink }) => {
 
   return (
     <>
-      <div className="hidden  dashboard:block h-screen bg-zinc-800 w-48 ">
+      <div className="hidden  dashboard:block restOfScreenHeight bg-zinc-800 w-48 ">
         {/* <div className="flex justify-center">
           <img src={logo} alt="Glitch" className=" w-2/5" />
         </div> */}

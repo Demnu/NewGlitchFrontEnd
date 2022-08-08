@@ -67,7 +67,7 @@ const Recipe = (selectLink) => {
     setSavedBeans(getBeansArray(recipe));
   }, []);
   return (
-    <div className="flex justify-center h-screen p-2">
+    <div className="flex justify-center restOfScreenHeight p-2">
       <div className=" bg-white w-min h-min p-2 rounded-md shadow-md">
         <h1 className=" font-bold text-center text-2xl">{recipe.id}</h1>
         <div className=" flex font-bold gap-2">
