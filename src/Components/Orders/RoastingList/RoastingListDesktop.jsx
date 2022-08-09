@@ -35,7 +35,7 @@ const RoastingListDesktop = ({
         />
         <div className=" w-3/12"></div>
       </div> */}
-      <div className="flex gap-1 my-2 ">
+      <div className="flex gap-2 my-2 ">
         <SaveCalculationButton
           title={saveCalculationButtonTitle}
           onClick={saveCalculationHandler}
@@ -45,7 +45,7 @@ const RoastingListDesktop = ({
           onClick={() => {
             setShowRoastingList(false);
           }}
-          className=" bg-gray-300 text-gray-500 hover:bg-gray-100  rounded-sm py-2 w-52  m-1 text-center   "
+          className=" bg-gray-300 text-gray-500 hover:bg-gray-100  rounded-sm py-2 w-52 text-center   "
         >
           Change Orders
         </button>
