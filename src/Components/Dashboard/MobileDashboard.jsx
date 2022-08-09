@@ -18,7 +18,7 @@ const MobileDashboard = ({ links, setSelectedLink }) => {
 
   return (
     <>
-      <div className="bg-yellow-400 pl-2 h-10 w-screen dashboard:hidden flex justify-between">
+      <div className="bg-yellow-500 pl-2 h-10 w-screen dashboard:hidden flex justify-between">
         <img src={logo} alt="Glitch" className="w-14" />
         <ul className="flex">
           {links.map((link, index) => (
@@ -26,7 +26,7 @@ const MobileDashboard = ({ links, setSelectedLink }) => {
               className={`hover:underline px-2 ${
                 link.selected === true
                   ? "bg-yellow-300 underline"
-                  : "bg-yellow-400 hover:bg-yellow-500 "
+                  : "bg-yellow-500 hover:bg-yellow-400 "
               }`}
               key={index}
               to={link.title.toLowerCase()}
