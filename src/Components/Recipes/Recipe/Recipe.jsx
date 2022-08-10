@@ -107,10 +107,10 @@ const Recipe = (selectLink) => {
 
   return (
     <div className="flex flex-col restOfScreenHeight p-2 ">
-      <div className="p-5 flex flex-col bg-zinc-200 p-2 rounded-lg">
+      <div className="p-5 flex flex-col bg-zinc-200 rounded-lg">
         <h1
           style={{ width: "392px" }}
-          className=" font-bold  text-3xl text-center w-80"
+          className=" font-bold  text-3xl text-center w-80 mb-5"
         >
           {recipe.id}
         </h1>
@@ -119,7 +119,7 @@ const Recipe = (selectLink) => {
           <h2 className=" text-center w-48">Amount(g)</h2>
         </div>
         {beans.map((bean) => (
-          <div className="flex w-min rounded-sm py-1 gap-2 mb-3 " key={bean.id}>
+          <div className="flex w-min rounded-sm py-1 gap-2 mb-2" key={bean.id}>
             <div className="flex gap-2">
               <RecipeTextInput value={bean.name} />
               <RecipeTextInput value={bean.amount} />
