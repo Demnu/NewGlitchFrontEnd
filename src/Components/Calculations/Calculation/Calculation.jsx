@@ -41,10 +41,13 @@ const Calculation = () => {
 
   useEffect(() => {
     if (location.state) {
+      console.log(location.state);
       calculationDispatch({
         type: "setAllFromRedirect",
         payload: location.state,
       });
+    } else {
+      console.log("not found");
     }
   }, []);
   return (
