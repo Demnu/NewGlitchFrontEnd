@@ -23,7 +23,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 // import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+const queryClient = new QueryClient();
 function App() {
   const [links, setSelectedLink] = useState([
     { title: "Orders", icon: ReceiptIcon, selected: false },
@@ -47,7 +47,6 @@ function App() {
       return newLinks;
     });
   };
-  const queryClient = new QueryClient();
 
   return (
     <>

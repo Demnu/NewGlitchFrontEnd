@@ -8,9 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 const Orders = ({ selectLink }) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [showRoastingList, setShowRoastingList] = useState(false);
-  const { isLoading, data } = useQuery(["orders"], () => {
-    return getOrders();
-  });
+  const { isLoading, data } = useQuery(["orders"], getOrders);
 
   useEffect(() => {
     selectLink("Orders");
