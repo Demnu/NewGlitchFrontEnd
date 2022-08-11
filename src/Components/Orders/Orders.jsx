@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
 import CalculateButton from "./CalculateButton";
 import { getOrders } from "../../myApi";
 import RoastingList from "./RoastingList/RoastingList";
+import { useQuery } from "@tanstack/react-query";
 const Orders = ({ selectLink }) => {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [showRoastingList, setShowRoastingList] = useState(false);
+  const { isLoading, data } = useQuery(["orders"], () => {
+    return getOrders();
+  });
+
   useEffect(() => {
     selectLink("Orders");
-    const res = getOrders();
-    res.then((result) => {
-      let resultOrders = [];
-      setOrders(result.data.reverse());
-      setLoading(false);
-    });
   }, []);
 
   const handleSelection = (item) => {
@@ -75,8 +73,8 @@ const Orders = ({ selectLink }) => {
         </div>
         <div className=" flex-grow bg-white ≈ rounded-sm mb-2 ">
           <DataGrid
-            loading={loading}
-            rows={orders}
+            loading={isLoading}
+            rows={data?.data || []}
             columns={columns}
             checkboxSelection
             density="compact"

@@ -40,8 +40,8 @@ const Calculation = () => {
   });
 
   useEffect(() => {
+    setWindowDimensions(getWindowDimensions());
     if (location.state) {
-      console.log(location.state);
       calculationDispatch({
         type: "setAllFromRedirect",
         payload: location.state,
@@ -52,11 +52,14 @@ const Calculation = () => {
   }, []);
   return (
     <div className="restOfScreenHeight">
+      {console.log(windowDimensions.width)}
       {windowDimensions.width > 1200 && calculation._id && (
         <CalculationDesktop calculation={calculation} />
       )}
       {windowDimensions.width <= 1200 && calculation._id && (
-        <CalculationMobile calculation={calculation} />
+        <div>
+          <CalculationMobile calculation={calculation} />
+        </div>
       )}
     </div>
   );

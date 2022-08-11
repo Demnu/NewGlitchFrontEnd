@@ -146,18 +146,18 @@ const Recipe = (selectLink) => {
             </button>
           )}
           <div style={{ width: "392px" }} className="flex  gap-2">
-            <button className="flex-grow justify-center bg-blue-700 hover:bg-blue-500 text-white  h-10 rounded-sm">
-              Update Recipe
+            <button className="flex-grow justify-center bg-blue-700 hover:bg-blue-500 text-white  h-10 rounded-sm px-1">
+              Update
             </button>
             <button
-              className={` flex-grow justify-center bg-zinc-300 hover:bg-zinc-100 text-black hover:  h-10 rounded-sm
+              className={` flex-grow justify-center bg-zinc-300 hover:bg-zinc-100 text-black hover:  h-10 rounded-sm px-1
               } `}
               onClick={resetToOriginalValue}
             >
-              Reset Values
+              Reset
             </button>
-            <button className="flex-grow justify-center bg-red-700 hover:bg-red-500 text-white  h-10 rounded-sm">
-              Delete Recipe
+            <button className="flex-grow justify-center bg-red-700 hover:bg-red-500 text-white  h-10 rounded-sm px-1">
+              Delete
             </button>
           </div>
         </div>

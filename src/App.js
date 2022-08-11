@@ -6,6 +6,16 @@ import Orders from "./Components/Orders/Orders";
 import Calculations from "./Components/Calculations/Calculations";
 import Recipes from "./Components/Recipes/Recipes";
 import Recipe from "./Components/Recipes/Recipe/Recipe";
+import MobileDashboard from "./Components/Dashboard/MobileDashboard";
+import Calculation from "./Components/Calculations/Calculation/Calculation";
+import Topbar from "./Components/Dashboard/Topbar";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import CalculateIcon from "@mui/icons-material/Calculate";
@@ -14,9 +24,6 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-import MobileDashboard from "./Components/Dashboard/MobileDashboard";
-import Calculation from "./Components/Calculations/Calculation/Calculation";
-import Topbar from "./Components/Dashboard/Topbar";
 function App() {
   const [links, setSelectedLink] = useState([
     { title: "Orders", icon: ReceiptIcon, selected: false },
@@ -40,53 +47,56 @@ function App() {
       return newLinks;
     });
   };
+  const queryClient = new QueryClient();
 
   return (
     <>
-      <BrowserRouter>
-        <MobileDashboard links={links} setSelectedLink={setSelectedLink} />
-        <Topbar />
-        <div className="flex">
-          <div className="flex-none">
-            <Dashboard
-              className=""
-              links={links}
-              setSelectedLink={setSelectedLink}
-            />
-          </div>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <MobileDashboard links={links} setSelectedLink={setSelectedLink} />
+          <Topbar />
+          <div className="flex">
+            <div className="flex-none">
+              <Dashboard
+                className=""
+                links={links}
+                setSelectedLink={setSelectedLink}
+              />
+            </div>
 
-          <div className="flex-grow overflow-y-auto overflow-x-auto bg-zinc-200 ">
-            {/* <div className=" w-auto py-7 bg-slate-200 "></div> */}
-            {/* <hr className=" border-slate-300 shadow-2xl" /> */}
+            <div className="flex-grow overflow-y-auto overflow-x-auto bg-zinc-200 ">
+              {/* <div className=" w-auto py-7 bg-slate-200 "></div> */}
+              {/* <hr className=" border-slate-300 shadow-2xl" /> */}
 
-            <Routes>
-              <Route
-                path="orders"
-                element={<Orders selectLink={selectLink} key={new Date()} />}
-              />
-              <Route
-                path="calculations"
-                element={<Calculations selectLink={selectLink} />}
-              />
-              <Route
-                path="/calculations/:calculationID"
-                element={<Calculation />}
-              />
-              <Route
-                path="/recipes"
-                selectLink={selectLink}
-                element={<Recipes />}
-              />
-              <Route
-                path="/recipes/:recipeID"
-                selectLink={selectLink}
-                element={<Recipe />}
-              />
-              <Route path="*" element={<p>Hi</p>} />
-            </Routes>
+              <Routes>
+                <Route
+                  path="orders"
+                  element={<Orders selectLink={selectLink} key={new Date()} />}
+                />
+                <Route
+                  path="calculations"
+                  element={<Calculations selectLink={selectLink} />}
+                />
+                <Route
+                  path="/calculations/:calculationID"
+                  element={<Calculation />}
+                />
+                <Route
+                  path="/recipes"
+                  selectLink={selectLink}
+                  element={<Recipes />}
+                />
+                <Route
+                  path="/recipes/:recipeID"
+                  selectLink={selectLink}
+                  element={<Recipe />}
+                />
+                <Route path="*" element={<p>Hi</p>} />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </BrowserRouter>
+        </BrowserRouter>
+      </QueryClientProvider>
     </>
   );
 }

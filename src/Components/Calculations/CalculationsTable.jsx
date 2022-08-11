@@ -27,7 +27,6 @@ const CalculationsTable = ({ calculations, loading }) => {
         onRowClick={(e) => {
           calculationClickHander(e);
         }}
-        isRowSelectable={true}
         loading={loading}
         rows={calculations}
         columns={columns}
