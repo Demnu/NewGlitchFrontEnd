@@ -8,8 +8,14 @@ import { useQuery } from "@tanstack/react-query";
 const Orders = ({ selectLink }) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [showRoastingList, setShowRoastingList] = useState(false);
-  const { isLoading, data } = useQuery(["orders"], getOrders);
+  const { isLoading, data } = useQuery(["orders"], getOrders, {
+    keepPreviousData: true,
+  });
 
+  let orders = [];
+  if (data) {
+    orders = [...data?.data].reverse();
+  }
   useEffect(() => {
     selectLink("Orders");
   }, []);
@@ -59,6 +65,11 @@ const Orders = ({ selectLink }) => {
   };
 
   return (
+    // <div>
+    //   {isLoading && <div>Loading</div>}
+    //   {console.log(data?.data)}
+    //   {data?.data && <div>Done </div>}
+    // </div>
     <div className="restOfScreenHeight flex flex-col mx-2">
       <div
         className={` flex-grow flex flex-col ${showRoastingList && "hidden"}`}
@@ -72,7 +83,7 @@ const Orders = ({ selectLink }) => {
         <div className=" flex-grow bg-white ≈ rounded-sm mb-2 ">
           <DataGrid
             loading={isLoading}
-            rows={data?.data || []}
+            rows={orders}
             columns={columns}
             checkboxSelection
             density="compact"
