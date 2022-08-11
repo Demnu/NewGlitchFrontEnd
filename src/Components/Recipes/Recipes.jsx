@@ -2,21 +2,14 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { getRecipes } from "../../myApi";
 import RecipesTable from "./RecipesTable";
+import { useQuery } from "@tanstack/react-query";
+
 const Recipes = () => {
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const response = getRecipes();
-    response.then((results) => {
-      console.log(results.data);
-      setRecipes(results.data);
-      setLoading(false);
-    });
-  }, []);
+  const { isLoading, data } = useQuery(["recipes"], getRecipes);
   return (
     <div className="restOfScreenHeight flex p-2 ">
       <div className=" flex-grow bg-white cursor-pointer">
-        <RecipesTable recipes={recipes} loading={loading} />
+        <RecipesTable recipes={data.data} loading={isLoading} />
       </div>
     </div>
   );
