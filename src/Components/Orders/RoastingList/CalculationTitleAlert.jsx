@@ -1,8 +1,8 @@
+import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
-import Button from "./Button";
 import ReactDOM from "react-dom";
 
-const InputAlert = ({ title, description, cancel, setInput }) => {
+const CalculationTitleAlert = ({ title, description, cancel, mutation }) => {
   const Message = () => {
     const [tempInput, setTempInput] = useState("");
     const [error, setError] = useState(false);
@@ -10,7 +10,6 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
       setError("");
       setTempInput(event.target.value);
     };
-
     return (
       <>
         <div className="z-40 fixed top-0 left-0 w-screen h-screen bg-black opacity-50 "></div>
@@ -50,7 +49,7 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
                     event.preventDefault();
 
                     if (tempInput.trim().length > 0) {
-                      setInput(tempInput);
+                      mutation.mutate(tempInput);
                       cancel();
                     } else {
                       setTempInput("");
@@ -89,4 +88,4 @@ const InputAlert = ({ title, description, cancel, setInput }) => {
     </>
   );
 };
-export default InputAlert;
+export default CalculationTitleAlert;
