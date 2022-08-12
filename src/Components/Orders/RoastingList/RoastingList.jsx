@@ -12,6 +12,7 @@ import { useReducer } from "react";
 import InputAlert from "../../UI/InputAlert";
 import userEvent from "@testing-library/user-event";
 import RoastingListDesktop from "./RoastingListDesktop";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
@@ -59,6 +60,8 @@ const DisplayTableReducer = (state, action) => {
   }
 };
 const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
+  const queryClient = useQueryClient();
+  const calculationsQuery = queryClient.getQueryData(["calculations"]);
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
@@ -122,6 +125,18 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
         setSaveCalculationButtonDisabled(true);
         setSaveCalculationButtonTitle("Calculation Saved");
         setCalculationTitle("");
+        let newCalculations = calculationsQuery.data;
+        let date = new Date();
+        newCalculations.push({
+          id: _id,
+          title: results.data.title,
+          date: date.toLocaleDateString() + " " + date.toLocaleTimeString(),
+          orderIDs: results.data.orderIDs,
+          products: results.data.products,
+          beans: results.data.beans,
+        });
+        console.log(newCalculations);
+        queryClient.setQueryData(["calculations"]);
         navigate("/calculations/" + String(_id), {
           state: {
             _id: _id,

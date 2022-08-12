@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getCalculations } from "../../myApi";
 import CalculationsTable from "./CalculationsTable";
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "react-router-dom";
 const Calculations = ({}) => {
-  const location = useLocation();
   const { isLoading, data } = useQuery(["calculations"], getCalculations);
   let calculationsJS = [];
   if (data?.data) {

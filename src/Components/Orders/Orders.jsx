@@ -4,7 +4,7 @@ import axios from "axios";
 import CalculateButton from "./CalculateButton";
 import { getCalculations, getOrders } from "../../myApi";
 import RoastingList from "./RoastingList/RoastingList";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 const Orders = ({ selectLink }) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [showRoastingList, setShowRoastingList] = useState(false);

@@ -45,9 +45,11 @@ const CalculationDesktop = ({ calculation }) => {
             onClick={() => {
               deleteCalculationMutation.mutate(calculation._id);
             }}
-            className=" bg-red-700 hover:bg-red-500 rounded-sm py-2 px-6  text-white m-1 text-center"
+            className={`${
+              deleteCalculationMutation.isLoading && "disabled"
+            } bg-red-700 hover:bg-red-500 rounded-sm py-2 px-6  text-white m-1 text-center`}
           >
-            Delete
+            {`${deleteCalculationMutation.isLoading ? "DELETING" : "Delete"}`}
           </button>
         </div>
       </div>
