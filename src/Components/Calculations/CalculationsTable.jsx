@@ -30,7 +30,6 @@ const CalculationsTable = ({ calculations, loading }) => {
         loading={loading}
         rows={calculations}
         columns={columns}
-        disableSelectionOnClick={true}
       />
     </>
   );

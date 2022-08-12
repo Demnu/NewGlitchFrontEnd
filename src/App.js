@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Orders from "./Components/Orders/Orders";
 import Calculations from "./Components/Calculations/Calculations";
@@ -9,6 +9,8 @@ import Recipe from "./Components/Recipes/Recipe/Recipe";
 import MobileDashboard from "./Components/Dashboard/MobileDashboard";
 import Calculation from "./Components/Calculations/Calculation/Calculation";
 import Topbar from "./Components/Dashboard/Topbar";
+import { useLocation } from "react-router-dom";
+
 import {
   useQuery,
   useMutation,
@@ -24,6 +26,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 // import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { getCalculations, getOrders, getRecipes } from "./myApi";
 const queryClient = new QueryClient();
 function App() {
   const [links, setSelectedLink] = useState([
@@ -53,6 +56,8 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
+        <PrefetchData/>
+
           <MobileDashboard links={links} setSelectedLink={setSelectedLink} />
           <Topbar />
           <div className="flex">
@@ -101,6 +106,22 @@ function App() {
       </QueryClientProvider>
     </>
   );
+}
+const PrefetchData= () =>{
+  const location = useLocation();
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    console.log("changed location")
+    queryClient.prefetchQuery(["calculations"], getCalculations);
+    queryClient.prefetchQuery(["recipes"], getRecipes);
+    queryClient.prefetchQuery(["orders"], getOrders);
+  }, [location]);
+
+
+
+
+  return(<></>)
+
 }
 
 export default App;

@@ -5,6 +5,7 @@ import ProductTable from "../../Orders/RoastingList/Tables/ProductTable";
 import OrderTable from "../../Orders/RoastingList/Tables/OrderTable";
 import CalculationDesktop from "./CalculationDesktop";
 import CalculationMobile from "./CalculationMobile";
+import { useQueryClient } from "@tanstack/react-query";
 const calculationReducer = (state, action) => {
   switch (action.type) {
     case "setAllFromRedirect":
@@ -52,7 +53,6 @@ const Calculation = () => {
   }, []);
   return (
     <div className="restOfScreenHeight">
-      {console.log(windowDimensions.width)}
       {windowDimensions.width > 1200 && calculation._id && (
         <CalculationDesktop calculation={calculation} />
       )}

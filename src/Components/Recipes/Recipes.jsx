@@ -9,7 +9,7 @@ const Recipes = () => {
   return (
     <div className="restOfScreenHeight flex p-2 ">
       <div className=" flex-grow bg-white cursor-pointer">
-        <RecipesTable recipes={data.data} loading={isLoading} />
+        <RecipesTable recipes={data?.data || []} loading={isLoading} />
       </div>
     </div>
   );

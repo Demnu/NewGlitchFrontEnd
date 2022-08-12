@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import CalculateButton from "./CalculateButton";
-import { getOrders } from "../../myApi";
+import { getCalculations, getOrders } from "../../myApi";
 import RoastingList from "./RoastingList/RoastingList";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 const Orders = ({ selectLink }) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [showRoastingList, setShowRoastingList] = useState(false);
-  const { isLoading, data } = useQuery(["orders"], getOrders, {
-    keepPreviousData: true,
-  });
+  const { isLoading, data } = useQuery(["orders"], getOrders);
 
   let orders = [];
   if (data) {

@@ -42,7 +42,6 @@ const RecipesTable = ({ recipes, loading }) => {
           console.log(e);
           recipeClickHander(e);
         }}
-        isRowSelectable={true}
         loading={loading}
         rows={recipes}
         columns={columns}
