@@ -111,10 +111,9 @@ const PrefetchData= () =>{
   const location = useLocation();
   const queryClient = useQueryClient();
   useEffect(() => {
-    console.log("changed location")
-    queryClient.prefetchQuery(["calculations"], getCalculations);
-    queryClient.prefetchQuery(["recipes"], getRecipes);
-    queryClient.prefetchQuery(["orders"], getOrders);
+    queryClient.prefetchQuery(["calculations"], getCalculations,{staleTime:180000});
+    queryClient.prefetchQuery(["recipes"], getRecipes,{staleTime:180000});
+    queryClient.prefetchQuery(["orders"], getOrders,{staleTime:180000});
   }, [location]);
 
 

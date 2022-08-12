@@ -13,22 +13,17 @@ const CalculationDesktop = ({ calculation }) => {
   const calculationsQuery = queryClient.getQueryData(["calculations"]);
   const navigate = useNavigate();
 
-  // queryClient.setQueryData(
-  //   ["calculations"],
-  //   calculationsQuery.data.filter((calc) => calc.id != calculation._id)
-  // );
+  const deleteCalculationMutation = useMutation((id) => {
+    deleteCalculation({ calculationID: id }).then(() => {
+      let changedCalcs = calculationsQuery.data.filter(
+        (calc) => calc.id != calculation._id
+      );
+      calculationsQuery.data = changedCalcs;
+      queryClient.setQueryData(["calculations"], calculationsQuery);
+      navigate("/calculations", { state: { optimisticUpdate: true } });
+    });
+  });
 
-  const { mu } = useMutation((id) => {
-    return deleteCalculation({ calculationID: id }).then(
-      navigate("/calculations")
-    );
-  });
-  useMutation(deleteCalculation, {
-    onMutate: (variables) => {
-      console.log("IN HERE");
-      console.log("IN HERE");
-    },
-  });
   return (
     <div className=" restOfScreenHeight flex flex-col px-2 py-2 ">
       <div className="flex gap-4 pb-1 text-black">
@@ -48,7 +43,7 @@ const CalculationDesktop = ({ calculation }) => {
         <div className=" w-4/12 flex justify-end">
           <button
             onClick={() => {
-              // deleteCalculationMutation.mutate(calculation._id);
+              deleteCalculationMutation.mutate(calculation._id);
             }}
             className=" bg-red-700 hover:bg-red-500 rounded-sm py-2 px-6  text-white m-1 text-center"
           >

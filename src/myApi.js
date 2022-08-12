@@ -38,11 +38,13 @@ const saveCalculation = async ({ title, orderIDs, products, beans }) => {
 };
 
 const getCalculations = async (params) => {
+
   const response = await instance.get("/roasting");
   return response;
 };
 
 const deleteCalculation = async (params) => {
+
   const response = await instance.delete(
     "/roasting/" + params.calculationID
   );
