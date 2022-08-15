@@ -9,6 +9,7 @@ import Recipe from "./Components/Recipes/Recipe/Recipe";
 import MobileDashboard from "./Components/Dashboard/MobileDashboard";
 import Calculation from "./Components/Calculations/Calculation/Calculation";
 import Topbar from "./Components/Dashboard/Topbar";
+import NewRecipe from "./Components/Recipes/NewRecipe/NewRecipe";
 import { useLocation } from "react-router-dom";
 
 import {
@@ -95,6 +96,11 @@ function App() {
                   path="/recipes/:recipeID"
                   selectLink={selectLink}
                   element={<Recipe />}
+                />
+                <Route
+                  path="/recipes/newRecipe"
+                  selectLink={selectLink}
+                  element={<NewRecipe />}
                 />
                 <Route path="*" element={<p>Hi</p>} />
               </Routes>
