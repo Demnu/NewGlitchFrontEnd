@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import ReactDOM from "react-dom";
 import DoneIcon from "@mui/icons-material/Done";
-
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 const Notification = ({ msg, error }) => {
   const [showNotification, setShowNotification] = useState(true);
   useEffect(() => {
@@ -19,7 +19,8 @@ const Notification = ({ msg, error }) => {
             error ? "bg-red-700" : "bg-green-600"
           }  `}
         >
-          <DoneIcon /> {msg}
+          {error ? <ReportProblemIcon /> : <DoneIcon />}
+          {msg}
         </div>
       )}
     </>

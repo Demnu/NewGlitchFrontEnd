@@ -198,7 +198,7 @@ const Recipe = (selectLink) => {
   };
 
   const updateRecipeMutation = useMutation((recipeReq) => {
-    updateRecipe(recipeReq);
+    return updateRecipe(recipeReq);
   });
   const changeBeanNameHandler = (e, id) => {
     let tempBeans = [...beans];
@@ -299,16 +299,16 @@ const Recipe = (selectLink) => {
             </div>
             <div className="flex flex-col gap-2 mt-3">
               {resetRecipeMutation.isSuccess && (
-                <Notification msg={"Recipe Reset"} />
+                <Notification msg={"Recipe reset"} />
               )}
               {resetRecipeMutation.isError && (
-                <Notification msg={"Error! Recipe not Reset"} error={true} />
+                <Notification msg={"Error! Recipe not reset"} error={true} />
               )}
               {updateRecipeMutation.isSuccess && (
-                <Notification msg={"Recipe Updated"} />
+                <Notification msg={"Recipe updated"} />
               )}
               {updateRecipeMutation.isError && (
-                <Notification msg={"Error! Recipe not Updated"} error={true} />
+                <Notification msg={"Error! Recipe not updated"} error={true} />
               )}
             </div>
           </div>
