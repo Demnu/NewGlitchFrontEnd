@@ -9,7 +9,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import TablePickerButton from "./TablePickerButton";
 import { useReducer } from "react";
-import InputAlert from "../../UI/InputAlert";
+import CalculationTitleAlert from "./CalculationTitleAlert";
 import userEvent from "@testing-library/user-event";
 import RoastingListDesktop from "./RoastingListDesktop";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -60,11 +60,29 @@ const DisplayTableReducer = (state, action) => {
   }
 };
 const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const calculationsQuery = queryClient.getQueryData(["calculations"]);
+  const [savingCalculation, setSavingCalculation] = useState(false);
+  const saveCalculationHandler = () => {
+    setSavingCalculation(true);
+  };
+  const [saveCalculationButtonTitle, setSaveCalculationButtonTitle] =
+    useState("Save Calculation");
+  const [saveCalculationButtonDisabled, setSaveCalculationButtonDisabled] =
+    useState(true);
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
+  const [displayTableState, displayTableStateDispatch] = useReducer(
+    DisplayTableReducer,
+    {
+      showOrderIDs: false,
+      showRoastingList: true,
+      showProductsList: false,
+    }
+  );
+
   useEffect(() => {
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
@@ -72,6 +90,46 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const saveCalculationMutation = useMutation(
+    (title) => {
+      saveCalculation({
+        title: title,
+        orderIDs: selectedOrders,
+        products,
+        beans,
+      }).then((response) => {
+        const results = response.data;
+        let date = new Date();
+
+        let obj = {
+          id: results._id,
+          title: results.title,
+          date: date.toLocaleDateString() + " " + date.toLocaleTimeString(),
+          orderIDs: results.orderIDs,
+          products: results.products,
+          beans: results.beans,
+        };
+        calculationsQuery.data.push(obj);
+        navigate("/calculations/" + String(response._id), {
+          state: {
+            _id: results._id,
+            title: results.title,
+            date: results.date,
+            orderIDs: results.orderIDs,
+            products: results.products,
+            beans: results.beans,
+          },
+        });
+      });
+    },
+    {
+      onMutate: () => {
+        setSaveCalculationButtonDisabled(true);
+        setSaveCalculationButtonTitle("SAVING CALCULATION");
+      },
+    }
+  );
 
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
@@ -91,75 +149,12 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
       setBeans(beansData);
     });
   }, []);
-  const [displayTableState, displayTableStateDispatch] = useReducer(
-    DisplayTableReducer,
-    {
-      showOrderIDs: false,
-      showRoastingList: true,
-      showProductsList: false,
-    }
-  );
-  const [savingCalculation, setSavingCalculation] = useState(false);
-  const [calculationTitle, setCalculationTitle] = useState("");
-  const saveCalculationHandler = () => {
-    setSavingCalculation(true);
-  };
-  const [saveCalculationButtonTitle, setSaveCalculationButtonTitle] =
-    useState("Save Calculation");
-  const [saveCalculationButtonDisabled, setSaveCalculationButtonDisabled] =
-    useState(true);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (calculationTitle.trim().length > 0) {
-      const response = saveCalculation({
-        title: calculationTitle,
-        orderIDs: selectedOrders,
-        products,
-        beans,
-      });
-      setSaveCalculationButtonDisabled(true);
-      setSaveCalculationButtonTitle("SAVING CALCULATION");
-      response.then((results) => {
-        const _id = results.data._id;
-        setSaveCalculationButtonDisabled(true);
-        setSaveCalculationButtonTitle("Calculation Saved");
-        setCalculationTitle("");
-        let newCalculations = calculationsQuery.data;
-        let date = new Date();
-        newCalculations.push({
-          id: _id,
-          title: results.data.title,
-          date: date.toLocaleDateString() + " " + date.toLocaleTimeString(),
-          orderIDs: results.data.orderIDs,
-          products: results.data.products,
-          beans: results.data.beans,
-        });
-        console.log(newCalculations);
-        queryClient.setQueryData(["calculations"]);
-        navigate("/calculations/" + String(_id), {
-          state: {
-            _id: _id,
-            title: results.data.title,
-            date: results.data.date,
-            orderIDs: results.data.orderIDs,
-            products: results.data.products,
-            beans: results.data.beans,
-          },
-        });
-      });
-      response.catch(() => {
-        setSaveCalculationButtonDisabled(false);
-        setSaveCalculationButtonTitle("ERROR! Please save again");
-      });
-    }
-  }, [calculationTitle]);
 
   return (
     <>
       {savingCalculation && (
-        <InputAlert
-          setInput={setCalculationTitle}
+        <CalculationTitleAlert
+          mutation={saveCalculationMutation}
           title={"Save Calculation"}
           description="Please enter a calculation title"
           cancel={setSavingCalculation}
