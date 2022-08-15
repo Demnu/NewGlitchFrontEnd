@@ -15,6 +15,7 @@ const RecipesTable = ({ recipes, loading }) => {
   const recipeClickHander = (e) => {
     navigate("/recipes/" + String(e.row._id), {
       state: {
+        _id: e.row._id,
         id: e.row.id,
         bean1Name: e.row.bean1Name,
         bean1Amount: e.row.bean1Amount,
@@ -39,7 +40,6 @@ const RecipesTable = ({ recipes, loading }) => {
     <>
       <DataGrid
         onRowClick={(e) => {
-          console.log(e);
           recipeClickHander(e);
         }}
         loading={loading}
