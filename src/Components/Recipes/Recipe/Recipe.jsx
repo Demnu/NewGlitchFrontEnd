@@ -109,6 +109,7 @@ const Recipe = (selectLink) => {
       });
     }
   };
+
   const resetRecipeMutation = useMutation(
     () => {
       const recipeReq = {
@@ -145,7 +146,7 @@ const Recipe = (selectLink) => {
     }
   );
 
-  const updateRecipeMutation = useMutation(() => {
+  const updateRecipeFormatter = () => {
     let error = false;
     const formattedBeans = [];
     for (let i = 0; i < beans.length; i++) {
@@ -192,8 +193,12 @@ const Recipe = (selectLink) => {
         bean8Amount: formattedBeans[7]?.amount || "",
       };
       setSavedBeans(formattedBeans);
-      return updateRecipe(recipeReq);
+      updateRecipeMutation.mutate(recipeReq);
     }
+  };
+
+  const updateRecipeMutation = useMutation((recipeReq) => {
+    updateRecipe(recipeReq);
   });
   const changeBeanNameHandler = (e, id) => {
     let tempBeans = [...beans];
@@ -275,7 +280,7 @@ const Recipe = (selectLink) => {
             <div style={{ width: "392px" }} className="flex  gap-2">
               <button
                 onClick={() => {
-                  updateRecipeMutation.mutate();
+                  updateRecipeFormatter();
                 }}
                 className=" w-1/3 flex-grow justify-center bg-blue-700 hover:bg-blue-500 text-white  h-10 rounded-sm px-1"
               >
