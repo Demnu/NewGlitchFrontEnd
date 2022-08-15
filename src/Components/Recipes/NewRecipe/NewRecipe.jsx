@@ -127,7 +127,7 @@ const NewRecipe = (selectLink) => {
         <div className=" flex flex-col bg-zinc-200 rounded-lg">
           <h3
             style={{ width: "392px" }}
-            className=" text-center text-xl font-bold pb-1"
+            className=" text-center text-xl font-bold pb-2"
           >
             Recipe Name
           </h3>

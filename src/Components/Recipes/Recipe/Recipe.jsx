@@ -81,6 +81,7 @@ const getBeansArray = (recipe) => {
 const Recipe = (selectLink) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [showError, setShowError] = useState(false);
   const [recipe, setRecipe] = useState(location.state);
   const [beans, setBeans] = useState([]);
   const [savedBeans, setSavedBeans] = useState([]);
@@ -148,10 +149,15 @@ const Recipe = (selectLink) => {
   );
 
   const updateRecipeFormatter = () => {
+    setShowError(false);
     let error = false;
     const formattedBeans = [];
     for (let i = 0; i < beans.length; i++) {
-      if (isNaN(beans[i].amount) || beans[i].amount === "") {
+      if (
+        isNaN(beans[i].amount) ||
+        beans[i].amount === "" ||
+        beans[i].amount <= 0
+      ) {
         beans[i].error = true;
         error = true;
       }
@@ -195,6 +201,8 @@ const Recipe = (selectLink) => {
       };
       setSavedBeans(formattedBeans);
       updateRecipeMutation.mutate(recipeReq);
+    } else {
+      setShowError(true);
     }
   };
 
@@ -214,6 +222,7 @@ const Recipe = (selectLink) => {
   );
 
   const changeBeanNameHandler = (e, id) => {
+    setShowError(false);
     let tempBeans = [...beans];
     for (let bean of tempBeans) {
       if (bean.id === id) {
@@ -225,6 +234,7 @@ const Recipe = (selectLink) => {
   };
 
   const changeBeanAmountHandler = (e, id) => {
+    setShowError(false);
     let tempBeans = [...beans];
     for (let bean of tempBeans) {
       if (bean.id === id) {
@@ -328,6 +338,9 @@ const Recipe = (selectLink) => {
               )}
               {deleteRecipeMutation.isLoading && (
                 <Notification msg={"Deleting recipe"} />
+              )}
+              {showError && (
+                <Notification msg={"Error! Input/s are invalid"} error={true} />
               )}
             </div>
           </div>
