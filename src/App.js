@@ -26,6 +26,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { getCalculations, getOrders, getRecipes } from "./myApi";
+import axios from "axios";
 const queryClient = new QueryClient();
 function App() {
   const [links, setSelectedLink] = useState([

@@ -111,7 +111,7 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
           beans: results.beans,
         };
         calculationsQuery.data.push(obj);
-        navigate("/calculations/" + String(response._id), {
+        navigate("/calculations/" + String(results._id), {
           state: {
             _id: results._id,
             title: results.title,

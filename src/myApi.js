@@ -79,6 +79,11 @@ const updateRecipe = async (params) =>{
   })
   return response
 }
+const deleteRecipe = async (params)=>{
+  console.log(params)
+    const response = await instance.delete("/recipes/" + params);
+    return response
+}
 export {
   getOrders,
   makeCalculation,
@@ -86,5 +91,6 @@ export {
   getCalculations,
   deleteCalculation,
   getRecipes,
-  updateRecipe
+  updateRecipe,
+  deleteRecipe
 };

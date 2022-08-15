@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import RecipeTextInput from "../RecipeTextInput";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useMutation } from "@tanstack/react-query";
-import { updateRecipe } from "../../../myApi";
+import { deleteRecipe, updateRecipe } from "../../../myApi";
 import Notification from "../../UI/Notification";
 const getBeansArray = (recipe) => {
   let savedBeansArray = [];
@@ -79,6 +79,7 @@ const getBeansArray = (recipe) => {
 };
 
 const Recipe = (selectLink) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const [recipe, setRecipe] = useState(location.state);
   const [beans, setBeans] = useState([]);
@@ -200,6 +201,18 @@ const Recipe = (selectLink) => {
   const updateRecipeMutation = useMutation((recipeReq) => {
     return updateRecipe(recipeReq);
   });
+
+  const deleteRecipeMutation = useMutation(
+    () => {
+      return deleteRecipe(recipe._id);
+    },
+    {
+      onSuccess: () => {
+        navigate("/recipes");
+      },
+    }
+  );
+
   const changeBeanNameHandler = (e, id) => {
     let tempBeans = [...beans];
     for (let bean of tempBeans) {
@@ -293,7 +306,10 @@ const Recipe = (selectLink) => {
               >
                 Reset
               </button>
-              <button className=" w-1/3 flex-grow justify-center bg-red-700 hover:bg-red-500 text-white  h-10 rounded-sm px-1">
+              <button
+                className=" w-1/3 flex-grow justify-center bg-red-700 hover:bg-red-500 text-white  h-10 rounded-sm px-1"
+                onClick={deleteRecipeMutation.mutate}
+              >
                 Delete
               </button>
             </div>
@@ -309,6 +325,9 @@ const Recipe = (selectLink) => {
               )}
               {updateRecipeMutation.isError && (
                 <Notification msg={"Error! Recipe not updated"} error={true} />
+              )}
+              {deleteRecipeMutation.isLoading && (
+                <Notification msg={"Deleting recipe"} />
               )}
             </div>
           </div>
