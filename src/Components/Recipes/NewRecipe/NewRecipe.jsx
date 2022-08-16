@@ -6,20 +6,21 @@ import RecipeTextInput from "../RecipeTextInput";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getUnusedProducts, updateRecipe } from "../../../myApi";
+import { getUnusedProducts, saveRecipe, updateRecipe } from "../../../myApi";
 import Notification from "../../UI/Notification";
 import { Autocomplete, TextField } from "@mui/material";
 import { style } from "@mui/system";
 
 const NewRecipe = (selectLink) => {
   const { isLoading, data } = useQuery(["unusedProducts"], getUnusedProducts);
-
   const navigate = useNavigate();
   const location = useLocation();
   const [beans, setBeans] = useState([
     { name: "", amount: "", id: Math.random(), error: false },
   ]);
   const [recipeName, setRecipeName] = useState("");
+  const [recipeNameEmpty, setRecipeNameEmpty] = useState(false);
+  const [showError, setShowError] = useState(false);
   const clickAddBeanHandler = () => {
     setBeans((prevBeans) => {
       let newBeans = [...prevBeans];
@@ -47,6 +48,7 @@ const NewRecipe = (selectLink) => {
   };
 
   const saveNewRecipeFormatter = () => {
+    setShowError(false);
     let error = false;
     const formattedBeans = [];
     for (let i = 0; i < beans.length; i++) {
@@ -70,6 +72,11 @@ const NewRecipe = (selectLink) => {
         error: true,
       });
     }
+    if (recipeName.trim().length <= 0) {
+      console.log("hihiihih");
+      error = true;
+      setRecipeNameEmpty(true);
+    }
     setBeans(formattedBeans);
     if (!error) {
       const recipeReq = {
@@ -92,12 +99,21 @@ const NewRecipe = (selectLink) => {
         bean8Amount: formattedBeans[7]?.amount || "",
       };
       saveNewRecipeMutation.mutate(recipeReq);
+    } else {
+      setShowError(true);
     }
   };
 
-  const saveNewRecipeMutation = useMutation((recipeReq) => {
-    return updateRecipe(recipeReq);
-  });
+  const saveNewRecipeMutation = useMutation(
+    (recipeReq) => {
+      return saveRecipe(recipeReq);
+    },
+    {
+      onSuccess: () => {
+        resetRecipe();
+      },
+    }
+  );
 
   const changeBeanNameHandler = (e, id) => {
     let tempBeans = [...beans];
@@ -134,15 +150,20 @@ const NewRecipe = (selectLink) => {
           </h3>
           <div className=" bg-white rounded-lg" style={{ width: "392px" }}>
             <Autocomplete
+              loading={isLoading}
               disablePortal
-              id="combo-box-demo"
               options={options || []}
               sx={{ width: 300 }}
               renderInput={(params) => (
-                <TextField {...params} style={{ width: "392px" }} />
+                <TextField
+                  {...params}
+                  style={{ width: "392px" }}
+                  error={recipeNameEmpty}
+                />
               )}
-              onInputChange={(e, value) => {
-                setRecipeName(value);
+              onChange={(e, value) => {
+                setRecipeNameEmpty(false);
+                setRecipeName(value || "");
               }}
               value={recipeName}
             />
@@ -211,7 +232,17 @@ const NewRecipe = (selectLink) => {
                 Reset
               </button>
             </div>
-            <div className="flex flex-col gap-2 mt-3"></div>
+            <div className="flex flex-col gap-2 mt-3">
+              {saveNewRecipeMutation.isSuccess && (
+                <Notification msg={`Recipe saved!`} />
+              )}
+              {showError && (
+                <Notification
+                  msg={`Error! Input/s invalid`}
+                  error={showError}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

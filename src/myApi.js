@@ -89,8 +89,8 @@ const getUnusedProducts = async ()=>{
   return response
 }
 
-const saveRecipe = async ()=>{
-  const response = await instance.post("/products")
+const saveRecipe = async (params)=>{
+  const response = await instance.post("/recipes",{params})
   return saveRecipe
 }
 
