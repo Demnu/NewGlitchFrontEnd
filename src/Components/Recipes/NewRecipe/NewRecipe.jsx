@@ -5,20 +5,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import RecipeTextInput from "../RecipeTextInput";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { useMutation } from "@tanstack/react-query";
-import { deleteRecipe, updateRecipe } from "../../../myApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getUnusedProducts, updateRecipe } from "../../../myApi";
 import Notification from "../../UI/Notification";
 import { Autocomplete, TextField } from "@mui/material";
 import { style } from "@mui/system";
 
 const NewRecipe = (selectLink) => {
+  const { isLoading, data } = useQuery(["unusedProducts"], getUnusedProducts);
+
   const navigate = useNavigate();
   const location = useLocation();
   const [beans, setBeans] = useState([
     { name: "", amount: "", id: Math.random(), error: false },
   ]);
   const [recipeName, setRecipeName] = useState("");
-  const [inputDivWidth, setInputDivWidth] = useState();
   const clickAddBeanHandler = () => {
     setBeans((prevBeans) => {
       let newBeans = [...prevBeans];
@@ -119,7 +120,7 @@ const NewRecipe = (selectLink) => {
     }
     setBeans(tempBeans);
   };
-  const options = ["The Godfather", "Pulp Fiction"];
+  const options = data?.data.unusedProducts.map((product) => product.label);
 
   return (
     <>
@@ -135,7 +136,7 @@ const NewRecipe = (selectLink) => {
             <Autocomplete
               disablePortal
               id="combo-box-demo"
-              options={options}
+              options={options || []}
               sx={{ width: 300 }}
               renderInput={(params) => (
                 <TextField {...params} style={{ width: "392px" }} />

@@ -80,10 +80,20 @@ const updateRecipe = async (params) =>{
   return response
 }
 const deleteRecipe = async (params)=>{
-  console.log(params)
     const response = await instance.delete("/recipes/" + params);
     return response
 }
+
+const getUnusedProducts = async ()=>{
+  const response = await instance.get("/products/unusedProducts");
+  return response
+}
+
+const saveRecipe = async ()=>{
+  const response = await instance.post("/products")
+  return saveRecipe
+}
+
 export {
   getOrders,
   makeCalculation,
@@ -92,5 +102,7 @@ export {
   deleteCalculation,
   getRecipes,
   updateRecipe,
-  deleteRecipe
+  deleteRecipe,
+  getUnusedProducts,
+  saveRecipe
 };

@@ -26,7 +26,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 // import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { getCalculations, getOrders, getRecipes } from "./myApi";
+import { getCalculations, getOrders, getRecipes, getUnusedProducts } from "./myApi";
 import axios from "axios";
 const queryClient = new QueryClient();
 function App() {
@@ -120,6 +120,7 @@ const PrefetchData= () =>{
     queryClient.prefetchQuery(["calculations"], getCalculations,{staleTime:180000});
     queryClient.prefetchQuery(["recipes"], getRecipes,{staleTime:180000});
     queryClient.prefetchQuery(["orders"], getOrders,{staleTime:180000});
+    queryClient.prefetchQuery(["unusedProducts"], getUnusedProducts,{staleTime:180000});
   }, [location]);
 
 
