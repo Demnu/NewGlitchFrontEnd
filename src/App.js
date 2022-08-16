@@ -10,6 +10,7 @@ import MobileDashboard from "./Components/Dashboard/MobileDashboard";
 import Calculation from "./Components/Calculations/Calculation/Calculation";
 import Topbar from "./Components/Dashboard/Topbar";
 import NewRecipe from "./Components/Recipes/NewRecipe/NewRecipe";
+import Analytics from "./Components/Analytics/Analytics";
 import { useLocation } from "react-router-dom";
 
 import {
@@ -18,7 +19,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import CalculateIcon from "@mui/icons-material/Calculate";
@@ -26,7 +27,12 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 // import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { getCalculations, getOrders, getRecipes, getUnusedProducts } from "./myApi";
+import {
+  getCalculations,
+  getOrders,
+  getRecipes,
+  getUnusedProducts,
+} from "./myApi";
 import axios from "axios";
 const queryClient = new QueryClient();
 function App() {
@@ -57,7 +63,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-        <PrefetchData/>
+          <PrefetchData />
 
           <MobileDashboard links={links} setSelectedLink={setSelectedLink} />
           <Topbar />
@@ -102,32 +108,36 @@ function App() {
                   selectLink={selectLink}
                   element={<NewRecipe />}
                 />
+                <Route
+                  path="/analytics"
+                  selectLink={selectLink}
+                  element={<Analytics />}
+                />
                 <Route path="*" element={<p>Hi</p>} />
               </Routes>
             </div>
           </div>
         </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-
       </QueryClientProvider>
     </>
   );
 }
-const PrefetchData= () =>{
+const PrefetchData = () => {
   const location = useLocation();
   const queryClient = useQueryClient();
   useEffect(() => {
-    queryClient.prefetchQuery(["calculations"], getCalculations,{staleTime:180000});
-    queryClient.prefetchQuery(["recipes"], getRecipes,{staleTime:180000});
-    queryClient.prefetchQuery(["orders"], getOrders,{staleTime:180000});
-    queryClient.prefetchQuery(["unusedProducts"], getUnusedProducts,{staleTime:180000});
+    queryClient.prefetchQuery(["calculations"], getCalculations, {
+      staleTime: 180000,
+    });
+    queryClient.prefetchQuery(["recipes"], getRecipes, { staleTime: 180000 });
+    queryClient.prefetchQuery(["orders"], getOrders, { staleTime: 180000 });
+    queryClient.prefetchQuery(["unusedProducts"], getUnusedProducts, {
+      staleTime: 180000,
+    });
   }, [location]);
 
-
-
-
-  return(<></>)
-
-}
+  return <></>;
+};
 
 export default App;
