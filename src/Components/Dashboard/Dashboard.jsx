@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "./logo.png";
 import DashBoardLink from "./DashboardLink";
-
+import UserContext from "../../Store/UserContext";
+import { useNavigate } from "react-router-dom";
 const Dashboard = ({ links, setSelectedLink }) => {
+  const navigate = useNavigate();
+  const userCtx = useContext(UserContext);
   const linkClickHandler = (event) => {
     const index = event.currentTarget.dataset.id;
+    if (Number(index) === links.length - 1) {
+      userCtx.setLoggedIn(false);
+      navigate("/login");
+    }
     setSelectedLink((prevLinks) => {
       const newLinks = [...prevLinks];
       for (let link of newLinks) {

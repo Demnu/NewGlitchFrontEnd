@@ -11,10 +11,11 @@ import Calculation from "./Components/Calculations/Calculation/Calculation";
 import Topbar from "./Components/Dashboard/Topbar";
 import NewRecipe from "./Components/Recipes/NewRecipe/NewRecipe";
 import Analytics from "./Components/Analytics/Analytics";
+import LoginPage from "./Components/Login/LoginPage";
+import RequireAuth from "./RequireAuth";
 import { useLocation } from "react-router-dom";
 
 import {
-  useQuery,
   useQueryClient,
   QueryClient,
   QueryClientProvider,
@@ -33,7 +34,7 @@ import {
   getRecipes,
   getUnusedProducts,
 } from "./myApi";
-import axios from "axios";
+import UserContext from "./Store/UserContext";
 const queryClient = new QueryClient();
 function App() {
   const [links, setSelectedLink] = useState([
@@ -58,71 +59,123 @@ function App() {
       return newLinks;
     });
   };
+  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <PrefetchData />
+        <UserContext.Provider value={{ loggedIn, setLoggedIn }}>
+          <BrowserRouter>
+            {loggedIn && (
+              <>
+                <PrefetchData />
+                <MobileDashboard
+                  links={links}
+                  setSelectedLink={setSelectedLink}
+                />
+                <Topbar />
+              </>
+            )}
 
-          <MobileDashboard links={links} setSelectedLink={setSelectedLink} />
-          <Topbar />
-          <div className="flex">
-            <div className="flex-none">
-              <Dashboard
-                className=""
-                links={links}
-                setSelectedLink={setSelectedLink}
-              />
+            <div className={`flex`}>
+              {loggedIn && (
+                <div className="flex-none">
+                  <Dashboard
+                    className=""
+                    links={links}
+                    setSelectedLink={setSelectedLink}
+                    setLoggedIn={setLoggedIn}
+                  />
+                </div>
+              )}
+
+              <div
+                className={`${
+                  loggedIn &&
+                  "flex-grow overflow-y-auto overflow-x-auto bg-zinc-200 "
+                }`}
+              >
+                <Routes>
+                  <Route
+                    path="/login"
+                    element={<LoginPage selectLink={selectLink} />}
+                  />
+                  <Route
+                    path="/logout"
+                    element={<LoginPage selectLink={selectLink} />}
+                  />
+                  <Route
+                    path="/orders"
+                    element={
+                      <RequireAuth>
+                        <Orders selectLink={selectLink} key={new Date()} />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/calculations"
+                    element={
+                      <RequireAuth>
+                        <Calculations selectLink={selectLink} />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/calculations/:calculationID"
+                    element={
+                      <RequireAuth>
+                        <Calculation />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/recipes"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <Recipes />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/recipes/:recipeID"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <Recipe />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/recipes/newRecipe"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <NewRecipe />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/analytics"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <Analytics />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route path="*" element={<p>Hi</p>} />
+                </Routes>
+              </div>
             </div>
-
-            <div className="flex-grow overflow-y-auto overflow-x-auto bg-zinc-200 ">
-              {/* <div className=" w-auto py-7 bg-slate-200 "></div> */}
-              {/* <hr className=" border-slate-300 shadow-2xl" /> */}
-
-              <Routes>
-                <Route
-                  path="orders"
-                  element={<Orders selectLink={selectLink} key={new Date()} />}
-                />
-                <Route
-                  path="calculations"
-                  element={<Calculations selectLink={selectLink} />}
-                />
-                <Route
-                  path="/calculations/:calculationID"
-                  element={<Calculation />}
-                />
-                <Route
-                  path="/recipes"
-                  selectLink={selectLink}
-                  element={<Recipes />}
-                />
-                <Route
-                  path="/recipes/:recipeID"
-                  selectLink={selectLink}
-                  element={<Recipe />}
-                />
-                <Route
-                  path="/recipes/newRecipe"
-                  selectLink={selectLink}
-                  element={<NewRecipe />}
-                />
-                <Route
-                  path="/analytics"
-                  selectLink={selectLink}
-                  element={<Analytics />}
-                />
-                <Route path="*" element={<p>Hi</p>} />
-              </Routes>
-            </div>
-          </div>
-        </BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+          </BrowserRouter>
+          <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        </UserContext.Provider>
       </QueryClientProvider>
     </>
   );
 }
+
 const PrefetchData = () => {
   const location = useLocation();
   const queryClient = useQueryClient();
