@@ -110,6 +110,11 @@ const NewRecipe = (selectLink) => {
     },
     {
       onSuccess: () => {
+        data.data.unusedProducts = data.data.unusedProducts.filter(
+          (product) => {
+            return product.label != recipeName;
+          }
+        );
         resetRecipe();
       },
     }
