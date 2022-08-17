@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Orders from "./Components/Orders/Orders";
 import Calculations from "./Components/Calculations/Calculations";
@@ -29,6 +29,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {
+  authenticate,
   getCalculations,
   getOrders,
   getRecipes,
@@ -39,7 +40,7 @@ import UserContext from "./Store/UserContext";
 const queryClient = new QueryClient();
 
 function App() {
-const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const logout = () => {
     queryClient.clear();
@@ -74,6 +75,8 @@ const [loggedIn, setLoggedIn] = useState(true);
       <QueryClientProvider client={queryClient}>
         <UserContext.Provider value={{ loggedIn, setLoggedIn, logout }}>
           <BrowserRouter>
+            <Auth />
+
             {loggedIn && (
               <>
                 <PrefetchData />
@@ -172,7 +175,7 @@ const [loggedIn, setLoggedIn] = useState(true);
                       </RequireAuth>
                     }
                   />
-                  <Route path="*" element={<Navigate to="/orders"/>} />
+                  <Route path="*" element={<Navigate to="/orders" />} />
                 </Routes>
               </div>
             </div>
@@ -183,6 +186,23 @@ const [loggedIn, setLoggedIn] = useState(true);
     </>
   );
 }
+
+const Auth = () => {
+  const userCtx = useContext(UserContext);
+  const location = useLocation();
+  useEffect(() => {
+    const response = authenticate();
+    response.then(() => {
+      console.log("Logged in!!!");
+      userCtx.setLoggedIn(true);
+    });
+    response.catch(() => {
+      console.log("Logged out!");
+      userCtx.logout();
+    });
+  }, [location]);
+  return <></>;
+};
 
 const PrefetchData = () => {
   const location = useLocation();

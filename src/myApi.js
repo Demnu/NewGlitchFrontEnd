@@ -100,6 +100,16 @@ const login = async (params) =>{
   return response
 }
 
+const authenticate = async () =>{
+  const response = await instance.get("/user/authenticate")
+  return response
+}
+
+const logoutServer = async () =>{
+  const response = await instance.post("/user/logout")
+  return response
+}
+
 export {
   getOrders,
   makeCalculation,
@@ -111,5 +121,7 @@ export {
   deleteRecipe,
   getUnusedProducts,
   saveRecipe,
-  login
+  login,
+  authenticate,
+  logoutServer
 };
