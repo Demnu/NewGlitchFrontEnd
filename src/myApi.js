@@ -91,7 +91,13 @@ const getUnusedProducts = async ()=>{
 
 const saveRecipe = async (params)=>{
   const response = await instance.post("/recipes",{params})
-  return saveRecipe
+  return response
+}
+
+const login = async (params) =>{
+  console.log(params)
+  const response = await instance.post("/user/login",{email:params.email, password:params.password})
+  return response
 }
 
 export {
@@ -104,5 +110,6 @@ export {
   updateRecipe,
   deleteRecipe,
   getUnusedProducts,
-  saveRecipe
+  saveRecipe,
+  login
 };

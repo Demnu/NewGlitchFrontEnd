@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Orders from "./Components/Orders/Orders";
@@ -39,7 +39,7 @@ import UserContext from "./Store/UserContext";
 const queryClient = new QueryClient();
 
 function App() {
-const [loggedIn, setLoggedIn] = useState(false);
+const [loggedIn, setLoggedIn] = useState(true);
 
   const logout = () => {
     queryClient.clear();
@@ -172,7 +172,7 @@ const [loggedIn, setLoggedIn] = useState(false);
                       </RequireAuth>
                     }
                   />
-                  <Route path="*" element={<p>Hi</p>} />
+                  <Route path="*" element={<Navigate to="/orders"/>} />
                 </Routes>
               </div>
             </div>
