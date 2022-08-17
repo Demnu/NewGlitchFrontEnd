@@ -10,7 +10,7 @@ const Dashboard = ({ links, setSelectedLink }) => {
   const linkClickHandler = (event) => {
     const index = event.currentTarget.dataset.id;
     if (Number(index) === links.length - 1) {
-      userCtx.setLoggedIn(false);
+      userCtx.logout();
       navigate("/login");
     }
     setSelectedLink((prevLinks) => {

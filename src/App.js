@@ -34,9 +34,18 @@ import {
   getRecipes,
   getUnusedProducts,
 } from "./myApi";
+
 import UserContext from "./Store/UserContext";
 const queryClient = new QueryClient();
+
 function App() {
+const [loggedIn, setLoggedIn] = useState(false);
+
+  const logout = () => {
+    queryClient.clear();
+    setLoggedIn(false);
+  };
+
   const [links, setSelectedLink] = useState([
     { title: "Orders", icon: ReceiptIcon, selected: false },
     { title: "Calculations", icon: CalculateIcon, selected: false },
@@ -59,12 +68,11 @@ function App() {
       return newLinks;
     });
   };
-  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <UserContext.Provider value={{ loggedIn, setLoggedIn }}>
+        <UserContext.Provider value={{ loggedIn, setLoggedIn, logout }}>
           <BrowserRouter>
             {loggedIn && (
               <>
@@ -77,7 +85,7 @@ function App() {
               </>
             )}
 
-            <div className={`flex`}>
+            <div className={` ${loggedIn && "flex"}`}>
               {loggedIn && (
                 <div className="flex-none">
                   <Dashboard
