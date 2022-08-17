@@ -73,7 +73,6 @@ const NewRecipe = (selectLink) => {
       });
     }
     if (recipeName.trim().length <= 0) {
-      console.log("hihiihih");
       error = true;
       setRecipeNameEmpty(true);
     }
@@ -237,7 +236,10 @@ const NewRecipe = (selectLink) => {
                 Reset
               </button>
             </div>
-            <div className="flex flex-col gap-2 mt-3">
+            <div
+              className="flex flex-col gap-2 mt-3"
+              style={{ width: "392px" }}
+            >
               {saveNewRecipeMutation.isSuccess && (
                 <Notification msg={`Recipe saved!`} />
               )}

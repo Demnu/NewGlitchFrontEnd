@@ -139,12 +139,8 @@ const Recipe = (selectLink) => {
     },
     {
       onMutate: () => {},
-      onError: (err) => {
-        // console.log("error");
-      },
-      onSuccess: () => {
-        // console.log("success");
-      },
+      onError: (err) => {},
+      onSuccess: () => {},
     }
   );
 
@@ -323,7 +319,10 @@ const Recipe = (selectLink) => {
                 Delete
               </button>
             </div>
-            <div className="flex flex-col gap-2 mt-3">
+            <div
+              className="flex flex-col gap-2 mt-3"
+              style={{ width: "392px" }}
+            >
               {resetRecipeMutation.isSuccess && (
                 <Notification msg={"Recipe reset"} />
               )}

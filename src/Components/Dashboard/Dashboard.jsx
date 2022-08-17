@@ -4,14 +4,12 @@ import logo from "./logo.png";
 import DashBoardLink from "./DashboardLink";
 import UserContext from "../../Store/UserContext";
 import { useNavigate } from "react-router-dom";
-import { logoutServer } from "../../myApi";
 const Dashboard = ({ links, setSelectedLink }) => {
   const navigate = useNavigate();
   const userCtx = useContext(UserContext);
   const linkClickHandler = (event) => {
     const index = event.currentTarget.dataset.id;
     if (Number(index) === links.length - 1) {
-      const response = logoutServer();
       userCtx.logout();
       navigate("/login");
     }

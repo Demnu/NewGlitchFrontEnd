@@ -34,6 +34,7 @@ import {
   getOrders,
   getRecipes,
   getUnusedProducts,
+  logoutServer,
 } from "./myApi";
 
 import UserContext from "./Store/UserContext";
@@ -43,6 +44,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   const logout = () => {
+    const response = logoutServer();
     queryClient.clear();
     setLoggedIn(false);
   };
@@ -75,7 +77,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <UserContext.Provider value={{ loggedIn, setLoggedIn, logout }}>
           <BrowserRouter>
-            <Auth />
+            {/* <Auth /> */}
 
             {loggedIn && (
               <>
@@ -186,23 +188,6 @@ function App() {
     </>
   );
 }
-
-const Auth = () => {
-  const userCtx = useContext(UserContext);
-  const location = useLocation();
-  useEffect(() => {
-    const response = authenticate();
-    response.then(() => {
-      console.log("Logged in!!!");
-      userCtx.setLoggedIn(true);
-    });
-    response.catch(() => {
-      console.log("Logged out!");
-      userCtx.logout();
-    });
-  }, [location]);
-  return <></>;
-};
 
 const PrefetchData = () => {
   const location = useLocation();

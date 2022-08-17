@@ -48,7 +48,6 @@ const Calculation = () => {
         payload: location.state,
       });
     } else {
-      console.log("not found");
     }
   }, []);
   return (

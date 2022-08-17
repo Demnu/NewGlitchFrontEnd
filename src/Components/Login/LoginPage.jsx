@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../Store/UserContext";
 import LoginTextInput from "./LoginTextInput";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -15,6 +15,12 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (userCtx.loggedIn === true) {
+      navigate(from, { replace: true });
+    }
+  }, [userCtx]);
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);

@@ -95,7 +95,6 @@ const saveRecipe = async (params)=>{
 }
 
 const login = async (params) =>{
-  console.log(params)
   const response = await instance.post("/user/login",{email:params.email, password:params.password})
   return response
 }
