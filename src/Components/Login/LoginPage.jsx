@@ -44,7 +44,7 @@ const LoginPage = () => {
     }
   );
   return (
-    <div className="flex flex-col justify-center place-items-center mt-20 mx-2">
+    <div className="flex flex-col justify-center place-items-center mt-10 mx-2">
       <form className="flex flex-col justify-center w-9/12 bg-zinc-200 rounded-xl">
         <div className="flex justify-center  place-items-center">
           <img src={logo} alt="Glitch" className="w-2/12" />
@@ -68,6 +68,7 @@ const LoginPage = () => {
             label={"Password"}
             onChange={passwordChangeHandler}
             value={password}
+            type={"password"}
           />
         </div>
 

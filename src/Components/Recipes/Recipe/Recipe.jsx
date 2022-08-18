@@ -243,8 +243,8 @@ const Recipe = (selectLink) => {
 
   return (
     <>
-      <div className="flex flex-col restOfScreenHeight p-2 ">
-        <div className="p-5 flex flex-col bg-zinc-200 rounded-lg">
+      <div className="flex flex-col restOfScreenHeight p-5 ">
+        <div className=" flex flex-col bg-zinc-200 rounded-lg">
           <h1
             style={{ width: "392px" }}
             className=" font-bold  text-3xl text-center w-80 mb-5"
