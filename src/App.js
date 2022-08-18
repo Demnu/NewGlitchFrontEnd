@@ -77,8 +77,6 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <UserContext.Provider value={{ loggedIn, setLoggedIn, logout }}>
           <BrowserRouter>
-            {/* <Auth /> */}
-
             {loggedIn && (
               <>
                 <PrefetchData />

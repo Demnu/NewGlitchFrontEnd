@@ -11,7 +11,7 @@ const BeanTable = ({ beans, loading }) => {
   let beansArray = beans;
   let newBeansArray = [];
   for (let bean of beansArray) {
-    if (bean.name && bean.amount) {
+    if (bean.id && bean.amount) {
       let newBeanAmount;
       if (isNaN(bean.amount)) {
         newBeanAmount = Number(bean.amount.replace(" kg", ""));
@@ -21,6 +21,8 @@ const BeanTable = ({ beans, loading }) => {
         newBeanAmount = bean.amount.toFixed(2);
       }
       newBeansArray.push({ id: bean.name || bean.id, amount: newBeanAmount });
+    } else {
+      console.log(bean);
     }
   }
 
