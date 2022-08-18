@@ -68,9 +68,9 @@ const Orders = ({ selectLink }) => {
     //   {console.log(data?.data)}
     //   {data?.data && <div>Done </div>}
     // </div>
-    <div className="restOfScreenHeight flex flex-col mx-2">
+    <div className="restOfScreenHeight mx-2 flex flex-col">
       <div
-        className={` flex-grow flex flex-col ${showRoastingList && "hidden"}`}
+        className={` flex flex-grow flex-col ${showRoastingList && "hidden"}`}
       >
         <div className=" my-2 flex">
           <CalculateButton
@@ -78,7 +78,7 @@ const Orders = ({ selectLink }) => {
             selectedOrders={selectedOrders}
           />
         </div>
-        <div className=" flex-grow bg-white ≈ rounded-sm mb-2 ">
+        <div className=" ≈ mb-2 flex-grow rounded-sm bg-white ">
           <DataGrid
             loading={isLoading}
             rows={orders}
@@ -90,7 +90,7 @@ const Orders = ({ selectLink }) => {
         </div>
       </div>
       <div
-        className={`${!showRoastingList && " hidden"} h-screen flex flex-col`}
+        className={`${!showRoastingList && " hidden"} flex h-screen flex-col`}
       >
         {showRoastingList && (
           <RoastingList

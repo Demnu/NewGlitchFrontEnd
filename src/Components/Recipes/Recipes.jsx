@@ -11,14 +11,14 @@ const Recipes = () => {
   return (
     <div className="restOfScreenHeight flex flex-col p-2 ">
       <button
-        className=" bg-blue-700 hover:bg-blue-500 rounded-sm text-white mb-2 p-2 w-52"
+        className=" mb-2 w-52 rounded-sm bg-blue-700 p-2 text-white hover:bg-blue-500"
         onClick={() => {
           navigate("/recipes/newRecipe");
         }}
       >
         New Recipe
       </button>
-      <div className=" flex-grow bg-white cursor-pointer">
+      <div className=" flex-grow cursor-pointer bg-white">
         <RecipesTable recipes={data?.data || []} loading={isLoading} />
       </div>
     </div>

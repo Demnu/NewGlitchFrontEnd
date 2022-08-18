@@ -144,15 +144,15 @@ const NewRecipe = (selectLink) => {
 
   return (
     <>
-      <div className="flex flex-col restOfScreenHeight p-5 ">
-        <div className=" flex flex-col bg-zinc-200 rounded-lg">
+      <div className="restOfScreenHeight flex flex-col p-5 ">
+        <div className=" flex flex-col rounded-lg bg-zinc-200">
           <h3
             style={{ width: "392px" }}
-            className=" text-center text-xl font-bold pb-2"
+            className=" pb-2 text-center text-xl font-bold"
           >
             Recipe Name
           </h3>
-          <div className=" bg-white rounded-lg" style={{ width: "392px" }}>
+          <div className=" rounded-lg bg-white" style={{ width: "392px" }}>
             <Autocomplete
               loading={isLoading}
               disablePortal
@@ -173,13 +173,13 @@ const NewRecipe = (selectLink) => {
             />
           </div>
 
-          <div className=" flex font-bold gap-2 mt-2">
-            <h2 className=" text-center w-48">Bean</h2>
-            <h2 className=" text-center w-48">Amount(g)</h2>
+          <div className=" mt-2 flex gap-2 font-bold">
+            <h2 className=" w-48 text-center">Bean</h2>
+            <h2 className=" w-48 text-center">Amount(g)</h2>
           </div>
           {beans.map((bean) => (
             <div
-              className="flex w-min rounded-sm py-1 gap-2 mb-2"
+              className="mb-2 flex w-min gap-2 rounded-sm py-1"
               key={bean.id}
             >
               <div className="flex gap-2">
@@ -203,16 +203,16 @@ const NewRecipe = (selectLink) => {
                   onClick={() => {
                     clickRemoveBeanHandler(bean.id);
                   }}
-                  className=" rounded-sm cursor-pointer hover:bg-slate-100"
+                  className=" cursor-pointer rounded-sm hover:bg-slate-100"
                 />
               </div>
             </div>
           ))}
-          <div className="flex flex-col flex-grow gap-2">
+          <div className="flex flex-grow flex-col gap-2">
             {beans.length <= 7 && (
               <button
                 style={{ width: "392px" }}
-                className=" justify-center bg-zinc-300 hover:bg-zinc-100  h-7 rounded-sm"
+                className=" h-7 justify-center rounded-sm  bg-zinc-300 hover:bg-zinc-100"
                 onClick={clickAddBeanHandler}
               >
                 <AddIcon />
@@ -223,21 +223,21 @@ const NewRecipe = (selectLink) => {
                 onClick={() => {
                   saveNewRecipeFormatter();
                 }}
-                className=" w-1/3 flex-grow justify-center bg-blue-700 hover:bg-blue-500 text-white  h-10 rounded-sm px-1"
+                className=" h-10 w-1/3 flex-grow justify-center rounded-sm bg-blue-700  px-1 text-white hover:bg-blue-500"
               >
                 Save
               </button>
 
               <button
-                className={` w-1/3 flex-grow justify-center bg-zinc-300 hover:bg-zinc-100 text-black hover:  h-10 rounded-sm px-1
-              } `}
+                className={` hover: } h-10 w-1/3 flex-grow justify-center rounded-sm  bg-zinc-300 px-1 text-black
+              hover:bg-zinc-100 `}
                 onClick={resetRecipe}
               >
                 Reset
               </button>
             </div>
             <div
-              className="flex flex-col gap-2 mt-3"
+              className="mt-3 flex flex-col gap-2"
               style={{ width: "392px" }}
             >
               {saveNewRecipeMutation.isSuccess && (

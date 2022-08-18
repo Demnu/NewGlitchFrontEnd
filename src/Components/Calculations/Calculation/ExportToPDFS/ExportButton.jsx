@@ -3,7 +3,7 @@ const ExportButton = (props) => {
   return (
     <button
       onClick={props.onClick}
-      className="bg-blue-700 hover:bg-blue-500 rounded-sm py-2 px-2 text-white text-center"
+      className="rounded-sm bg-blue-700 py-2 px-2 text-center text-white hover:bg-blue-500"
     >
       {props.children}
     </button>

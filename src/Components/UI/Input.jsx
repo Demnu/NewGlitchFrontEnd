@@ -12,7 +12,7 @@ const Input = (props) => {
       disabled={props.disabled}
       type={props.type}
       onChange={changeValue}
-      className="border border-zinc-600 rounded-sm  focus:outline-none focus:border-purple-600 hover:border-purple-500 bg-zinc-800"
+      className="rounded-sm border border-zinc-600  bg-zinc-800 hover:border-purple-500 focus:border-purple-600 focus:outline-none"
       value={props.value}
     ></input>
   );

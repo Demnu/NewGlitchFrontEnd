@@ -17,7 +17,7 @@ const Notification = ({ msg, error, noTimeout }) => {
     <>
       {showNotification && (
         <div
-          className={`flex justify-left gap-2 text-white rounded-md py-1 px-2  ${
+          className={`justify-left flex gap-2 rounded-md py-1 px-2 text-white  ${
             error ? "bg-red-700" : "bg-green-600"
           }  `}
         >

@@ -6,7 +6,7 @@ const SaveCalculationButton = ({ title, loading, onClick }) => {
       <div
         disabled={true}
         className={
-          "bg-gray-300 text-gray-500 w-52 rounded-sm py-2  text-center"
+          "w-52 rounded-sm bg-gray-300 py-2 text-center  text-gray-500"
         }
       >
         {title}
@@ -17,7 +17,7 @@ const SaveCalculationButton = ({ title, loading, onClick }) => {
       <button
         onClick={onClick}
         className={
-          "bg-blue-700 hover:bg-blue-500 w-52 rounded-sm py-2 text-white text-center"
+          "w-52 rounded-sm bg-blue-700 py-2 text-center text-white hover:bg-blue-500"
         }
       >
         {title}

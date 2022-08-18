@@ -16,7 +16,7 @@ const RoastingListDesktop = ({
 }) => {
   return (
     <>
-      <div className="flex gap-2 my-2 ">
+      <div className="my-2 flex gap-2 ">
         <SaveCalculationButton
           title={saveCalculationButtonTitle}
           onClick={saveCalculationHandler}
@@ -26,21 +26,21 @@ const RoastingListDesktop = ({
           onClick={() => {
             setShowRoastingList(false);
           }}
-          className=" bg-gray-300 text-gray-500 hover:bg-gray-100  rounded-sm py-2 w-52 text-center   "
+          className=" w-52 rounded-sm bg-gray-300  py-2 text-center text-gray-500 hover:bg-gray-100   "
         >
           Change Orders
         </button>
       </div>
 
-      <div className={`flex gap-2 flex-grow mb-2`}>
+      <div className={`mb-2 flex flex-grow gap-2`}>
         <>
-          <div className=" bg-white rounded-md w-3/12 ">
+          <div className=" w-3/12 rounded-md bg-white ">
             <OrderTable orders={selectedOrders} loading={loading} />
           </div>
-          <div className=" bg-white rounded-md w-2/6 ">
+          <div className=" w-2/6 rounded-md bg-white ">
             <BeanTable beans={beans} loading={loading} />
           </div>
-          <div className=" bg-white rounded-md  w-3/6 ">
+          <div className=" w-3/6 rounded-md  bg-white ">
             <ProductTable products={products} loading={loading} />
           </div>
         </>

@@ -35,33 +35,33 @@ const CalculationDesktop = ({ calculation }) => {
           <span className="font-bold">Date Saved: </span> {calculation.date}
         </div>
       </div>
-      <div className="flex justify-centre mb-1">
-        <div className="flex w-8/12 justify-start py-1 gap-2">
+      <div className="justify-centre mb-1 flex">
+        <div className="flex w-8/12 justify-start gap-2 py-1">
           <RoastingListPDF beans={calculation.beans} />
           <ProductTallyPDF products={calculation.products} />
         </div>
-        <div className=" w-4/12 flex justify-end">
+        <div className=" flex w-4/12 justify-end">
           <button
             onClick={() => {
               deleteCalculationMutation.mutate(calculation._id);
             }}
             className={`${
               deleteCalculationMutation.isLoading && "disabled"
-            } bg-red-700 hover:bg-red-500 rounded-sm py-2 px-6  text-white m-1 text-center`}
+            } m-1 rounded-sm bg-red-700 py-2 px-6  text-center text-white hover:bg-red-500`}
           >
             {`${deleteCalculationMutation.isLoading ? "DELETING" : "Delete"}`}
           </button>
         </div>
       </div>
 
-      <div className="flex-grow flex gap-2">
-        <div className=" bg-white rounded-md w-3/12 ">
+      <div className="flex flex-grow gap-2">
+        <div className=" w-3/12 rounded-md bg-white ">
           <OrderTable orders={calculation.orderIDs} loading={false} />
         </div>
-        <div className=" bg-white rounded-md w-2/6 ">
+        <div className=" w-2/6 rounded-md bg-white ">
           <BeanTable beans={calculation.beans} loading={false} />
         </div>
-        <div className=" bg-white rounded-md  w-3/6 ">
+        <div className=" w-3/6 rounded-md  bg-white ">
           <ProductTable products={calculation.products} loading={false} />
         </div>
       </div>

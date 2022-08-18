@@ -178,12 +178,12 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
       {windowDimensions.width <= 1200 && (
         <>
           <div className="">
-            <div className="flex justify-center w-5/6 mb-1 divide-x-2  mx-auto shadow-lg ">
+            <div className="mx-auto mb-1 flex w-5/6 justify-center  divide-x-2 shadow-lg ">
               <button
                 onClick={() => {
                   setShowRoastingList(false);
                 }}
-                className=" bg-zinc-400 hover:bg-zinc-500 w-2/6 py-1  text-white text-center text-lg border-black rounded-bl-md   "
+                className=" w-2/6 rounded-bl-md border-black bg-zinc-400  py-1 text-center text-lg text-white hover:bg-zinc-500   "
               >
                 Back
               </button>
@@ -214,14 +214,14 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
               {/* <TablePickerButton title={"Export PDF"} /> */}
               <button
                 onClick={() => {}}
-                className=" bg-blue-700 hover:bg-blue-500 w-2/6 py-1  text-white text-center text-lg border-black rounded-br-md   "
+                className=" w-2/6 rounded-br-md border-black bg-blue-700  py-1 text-center text-lg text-white hover:bg-blue-500   "
               >
                 Save Calculation
               </button>
             </div>
           </div>
-          <div className=" mx-2 flex justify-center flex-grow">
-            <div className=" bg-white rounded-md flex-grow mt-4">
+          <div className=" mx-2 flex flex-grow justify-center">
+            <div className=" mt-4 flex-grow rounded-md bg-white">
               {displayTableState.showOrderIDs && (
                 <OrderTable orders={selectedOrders} loading={loading} />
               )}

@@ -26,16 +26,16 @@ const Table = ({ columns, data, title }) => {
 
   return (
     <>
-      <div className=" border-2 rounded-md shadow-md">
+      <div className=" rounded-md border-2 shadow-md">
         <div className="flex justify-center">
-          <h1 className=" my-2 text-xl whitespace-nowrap">{title}</h1>
+          <h1 className=" my-2 whitespace-nowrap text-xl">{title}</h1>
         </div>
-        <div className="flex flex-col h-48 ">
+        <div className="flex h-48 flex-col ">
           {/* tableheaders */}
           <div>
             {columnHeaders.map((header, index) => (
               <th
-                className="px-4 py-2 font-medium text-left whitespace-nowrap "
+                className="whitespace-nowrap px-4 py-2 text-left font-medium "
                 key={index}
               >
                 {header}
@@ -43,7 +43,7 @@ const Table = ({ columns, data, title }) => {
             ))}
           </div>
 
-          <div className="overflow-y-auto flex-grow">
+          <div className="flex-grow overflow-y-auto">
             {rows.map((row, index) => (
               <tr>
                 {row.map((value) => (

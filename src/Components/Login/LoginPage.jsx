@@ -44,15 +44,15 @@ const LoginPage = () => {
     }
   );
   return (
-    <div className="flex flex-col justify-center place-items-center mt-10 mx-2">
-      <form className="flex flex-col justify-center w-9/12 bg-zinc-200 rounded-xl">
-        <div className="flex justify-center  place-items-center">
+    <div className="mx-2 mt-10 flex flex-col place-items-center justify-center">
+      <form className="flex w-9/12 flex-col justify-center rounded-xl bg-zinc-200">
+        <div className="flex place-items-center  justify-center">
           <img src={logo} alt="Glitch" className="w-2/12" />
         </div>
 
-        <div className="text-center text-3xl m-3">Sign In</div>
+        <div className="m-3 text-center text-3xl">Sign In</div>
         {errorMsg.length > 0 && (
-          <div className="mx-auto w-5/12 m-2">
+          <div className="m-2 mx-auto w-5/12">
             <Notification msg={errorMsg} error={true} noTimeout={true} />
           </div>
         )}
@@ -78,7 +78,7 @@ const LoginPage = () => {
             e.preventDefault();
             loginMutation.mutate();
           }}
-          className=" mx-auto w-5/12 text-white rounded-sm p-2 bg-blue-700 hover:bg-blue-500 my-5"
+          className=" mx-auto my-5 w-5/12 rounded-sm bg-blue-700 p-2 text-white hover:bg-blue-500"
         >
           Log In
         </button>
