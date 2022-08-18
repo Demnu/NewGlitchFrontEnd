@@ -11,14 +11,17 @@ const BeanTable = ({ beans, loading }) => {
   let beansArray = beans;
   let newBeansArray = [];
   for (let bean of beansArray) {
-    let newBeanAmount;
-    if (isNaN(bean.amount)) {
-      newBeanAmount = Number(bean.amount.replace(" kg", ""));
-      newBeanAmount = newBeanAmount.toFixed(2);
-    } else {
-      newBeanAmount = bean.amount.toFixed(2);
+    if (bean.name && bean.amount) {
+      let newBeanAmount;
+      if (isNaN(bean.amount)) {
+        newBeanAmount = Number(bean.amount.replace(" kg", ""));
+        newBeanAmount = newBeanAmount.toFixed(2);
+      } else {
+        //ERROR is happening right
+        newBeanAmount = bean.amount.toFixed(2);
+      }
+      newBeansArray.push({ id: bean.name || bean.id, amount: newBeanAmount });
     }
-    newBeansArray.push({ id: bean.name || bean.id, amount: newBeanAmount });
   }
 
   // const columns = useMemo(() => getBeansColumns(), []);
