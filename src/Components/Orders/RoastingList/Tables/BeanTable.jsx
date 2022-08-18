@@ -11,7 +11,7 @@ const BeanTable = ({ beans, loading }) => {
   let beansArray = beans;
   let newBeansArray = [];
   for (let bean of beansArray) {
-    if (bean.id && bean.amount) {
+    if ((bean.id || bean.name) && bean.amount) {
       let newBeanAmount;
       if (isNaN(bean.amount)) {
         newBeanAmount = Number(bean.amount.replace(" kg", ""));
