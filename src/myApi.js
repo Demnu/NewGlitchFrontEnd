@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-  // baseURL: "https://glitchhub.coffee/api/v1",
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: "https://glitchhub.coffee/api/v1",
+  // baseURL: "http://localhost:3000/api/v1",
 });
 
 const getOrders = async (params) => {
@@ -57,7 +57,7 @@ const getRecipes = async (params) => {
   return response;
 };
 
-const updateRecipe = async (params) =>{
+const updateRecipe = async (params) => {
   const response = await instance.patch("/recipes/" + params._id, {
     _id: params._id,
     product: params.product,
@@ -80,32 +80,32 @@ const updateRecipe = async (params) =>{
   })
   return response
 }
-const deleteRecipe = async (params)=>{
-    const response = await instance.delete("/recipes/" + params);
-    return response
+const deleteRecipe = async (params) => {
+  const response = await instance.delete("/recipes/" + params);
+  return response
 }
 
-const getUnusedProducts = async ()=>{
+const getUnusedProducts = async () => {
   const response = await instance.get("/products/unusedProducts");
   return response
 }
 
-const saveRecipe = async (params)=>{
-  const response = await instance.post("/recipes",{params})
+const saveRecipe = async (params) => {
+  const response = await instance.post("/recipes", { params })
   return response
 }
 
-const login = async (params) =>{
-  const response = await instance.post("/user/login",{email:params.email, password:params.password})
+const login = async (params) => {
+  const response = await instance.post("/user/login", { email: params.email, password: params.password })
   return response
 }
 
-const authenticate = async () =>{
+const authenticate = async () => {
   const response = await instance.get("/user/authenticate")
   return response
 }
 
-const logoutServer = async () =>{
+const logoutServer = async () => {
   const response = await instance.post("/user/logout")
   return response
 }
