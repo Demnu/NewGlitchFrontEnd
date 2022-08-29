@@ -63,11 +63,6 @@ const Orders = ({ selectLink }) => {
   };
 
   return (
-    // <div>
-    //   {isLoading && <div>Loading</div>}
-    //   {console.log(data?.data)}
-    //   {data?.data && <div>Done </div>}
-    // </div>
     <div className="restOfScreenHeight mx-2 flex flex-col">
       <div
         className={` flex flex-grow flex-col ${showRoastingList && "hidden"}`}

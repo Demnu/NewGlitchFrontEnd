@@ -103,7 +103,7 @@ function App() {
               <div
                 className={`${
                   loggedIn &&
-                  "flex-grow overflow-y-auto overflow-x-auto bg-zinc-200 "
+                  "flex-grow overflow-x-auto overflow-y-auto bg-zinc-200 "
                 }`}
               >
                 <Routes>

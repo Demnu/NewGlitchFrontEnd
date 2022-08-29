@@ -27,6 +27,9 @@ function getWindowDimensions() {
   };
 }
 const Calculation = () => {
+  // const queryClient = useQueryClient();
+  // const calculationsQuery = queryClient.getQueryData(["calculations"]);
+
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
@@ -41,6 +44,10 @@ const Calculation = () => {
   });
 
   useEffect(() => {
+    // const calcID = String(location.pathname).replace("/calculations/", "");
+    // const calc = calculationsQuery?.data.find((calc) => {
+    //   return (calc.id = calcID);
+    // });
     setWindowDimensions(getWindowDimensions());
     if (location.state) {
       calculationDispatch({
@@ -52,7 +59,7 @@ const Calculation = () => {
   }, []);
   return (
     <div className="restOfScreenHeight">
-      {windowDimensions.width > 1200 && calculation._id && (
+      {windowDimensions.width > 0 && calculation._id && (
         <CalculationDesktop calculation={calculation} />
       )}
       {windowDimensions.width <= 1200 && calculation._id && (

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { DataGrid } from "@mui/x-data-grid";
 const columns = [
@@ -7,7 +8,7 @@ const columns = [
   { field: "date", headerName: "Date Added", width: 300 },
 ];
 
-const CalculationsTable = ({ calculations, loading }) => {
+const CalculationsTable = ({ loading, calcs }) => {
   const navigate = useNavigate();
   const calculationClickHander = (e) => {
     navigate("/calculations/" + String(e.id), {
@@ -28,7 +29,7 @@ const CalculationsTable = ({ calculations, loading }) => {
           calculationClickHander(e);
         }}
         loading={loading}
-        rows={calculations}
+        rows={calcs || []}
         columns={columns}
       />
     </>

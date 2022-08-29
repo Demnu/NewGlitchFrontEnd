@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getCalculations } from "../../myApi";
 import CalculationsTable from "./CalculationsTable";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 const Calculations = ({}) => {
-  const { isLoading, data } = useQuery(["calculations"], getCalculations);
-  let calculationsJS = [];
-  if (data?.data) {
-    calculationsJS = [...data.data].reverse();
-  }
-
+  const queryClient = useQueryClient();
+  const { isLoading, data } = useQuery(["calculations"], getCalculations, {});
   return (
     <div className=" restOfScreenHeight flex flex-col px-2 py-2">
-      <div className=" flex-grow bg-white rounded-sm cursor-pointer">
-        <CalculationsTable loading={isLoading} calculations={calculationsJS} />
+      <div className=" flex-grow cursor-pointer rounded-sm bg-white">
+        <CalculationsTable loading={isLoading} calcs={data?.data || []} />
       </div>
     </div>
   );

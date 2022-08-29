@@ -12,7 +12,6 @@ const CalculationDesktop = ({ calculation }) => {
   const queryClient = useQueryClient();
   const calculationsQuery = queryClient.getQueryData(["calculations"]);
   const navigate = useNavigate();
-
   const deleteCalculationMutation = useMutation((id) => {
     deleteCalculation({ calculationID: id }).then(() => {
       let changedCalcs = calculationsQuery.data.filter(
