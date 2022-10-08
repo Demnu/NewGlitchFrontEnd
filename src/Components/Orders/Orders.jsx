@@ -35,7 +35,7 @@ const Orders = ({ selectLink }) => {
     {
       field: "lastOrder",
       headerName: <StarOutlineRoundedIcon />,
-      width: 20,
+      width: 50,
       renderCell: (params) => {
         return (
           <button

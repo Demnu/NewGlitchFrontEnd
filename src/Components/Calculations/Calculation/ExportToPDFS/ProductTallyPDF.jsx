@@ -35,6 +35,6 @@ const ProductTallyPDF = ({ products }) => {
     doc.save("Product_Tally_" + newdate + ".pdf");
   };
 
-  return <ExportButton onClick={exportPDF}>Export Product Tally</ExportButton>;
+  return <ExportButton onClick={exportPDF}>Product Tally</ExportButton>;
 };
 export default ProductTallyPDF;

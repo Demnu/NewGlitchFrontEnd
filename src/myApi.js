@@ -114,6 +114,10 @@ const logoutServer = async () => {
   return response
 }
 
+const getRecipeCodes = async()=>{
+  const response = await instance.get("/recipeCodes");
+  return response;
+}
 
 
 export {
@@ -130,5 +134,6 @@ export {
   saveRecipe,
   login,
   authenticate,
-  logoutServer
+  logoutServer,
+  getRecipeCodes
 };

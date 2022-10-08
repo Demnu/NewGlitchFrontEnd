@@ -25,6 +25,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import CalculateIcon from "@mui/icons-material/Calculate";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 // import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -32,12 +33,14 @@ import {
   authenticate,
   getCalculations,
   getOrders,
+  getRecipeCodes,
   getRecipes,
   getUnusedProducts,
   logoutServer,
 } from "./myApi";
 
 import UserContext from "./Store/UserContext";
+import RecipeCodes from "./Components/RecipeCodes/RecipeCodes";
 const queryClient = new QueryClient();
 
 function App() {
@@ -53,6 +56,7 @@ function App() {
     { title: "Orders", icon: ReceiptIcon, selected: false },
     { title: "Calculations", icon: CalculateIcon, selected: false },
     { title: "Recipes", icon: MenuBookIcon, selected: false },
+    { title: "Codes", icon: FormatListNumberedIcon, selected: false },
     // { title: "Products", icon: ShoppingBagIcon, selected: false },
     { title: "Analytics", icon: AutoGraphIcon, selected: false },
     { title: "Logout", icon: LogoutIcon, selected: false },
@@ -101,9 +105,10 @@ function App() {
               )}
 
               <div
-                className={`${loggedIn &&
+                className={`${
+                  loggedIn &&
                   "flex-grow overflow-x-auto overflow-y-auto bg-zinc-200 "
-                  }`}
+                }`}
               >
                 <Routes>
                   <Route
@@ -127,6 +132,14 @@ function App() {
                     element={
                       <RequireAuth>
                         <Calculations selectLink={selectLink} />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/codes"
+                    element={
+                      <RequireAuth>
+                        <RecipeCodes selectLink={selectLink} />
                       </RequireAuth>
                     }
                   />
@@ -193,6 +206,7 @@ const PrefetchData = () => {
     queryClient.prefetchQuery(["calculations"], getCalculations, {
       staleTime: 180000,
     });
+    queryClient.prefetchQuery(["codes"], getRecipeCodes, { staleTime: 180000 });
     queryClient.prefetchQuery(["recipes"], getRecipes, { staleTime: 180000 });
     queryClient.prefetchQuery(["orders"], getOrders, { staleTime: 180000 });
     queryClient.prefetchQuery(["unusedProducts"], getUnusedProducts, {
