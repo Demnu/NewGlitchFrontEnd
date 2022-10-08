@@ -41,6 +41,7 @@ import {
 
 import UserContext from "./Store/UserContext";
 import RecipeCodes from "./Components/RecipeCodes/RecipeCodes";
+import NewRecipeCode from "./Components/RecipeCodes/newCode/NewRecipeCode";
 const queryClient = new QueryClient();
 
 function App() {
@@ -140,6 +141,15 @@ function App() {
                     element={
                       <RequireAuth>
                         <RecipeCodes selectLink={selectLink} />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/codes/newRecipeCode"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <NewRecipeCode />
                       </RequireAuth>
                     }
                   />

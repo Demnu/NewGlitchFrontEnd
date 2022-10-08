@@ -119,6 +119,11 @@ const getRecipeCodes = async()=>{
   return response;
 }
 
+const createRecipeCode = async(params)=>{
+  const response = await instance.post("/recipeCodes", params)
+  return response
+}
+
 
 export {
   getOrders,
@@ -135,5 +140,6 @@ export {
   login,
   authenticate,
   logoutServer,
-  getRecipeCodes
+  getRecipeCodes,
+  createRecipeCode
 };

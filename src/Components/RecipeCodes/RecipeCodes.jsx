@@ -12,7 +12,7 @@ const RecipeCodes = () => {
       <button
         className=" mb-2 w-52 rounded-sm bg-blue-700 p-2 text-white hover:bg-blue-500"
         onClick={() => {
-          navigate("/codes/newCode");
+          navigate("/codes/newRecipeCode");
         }}
       >
         New Code
