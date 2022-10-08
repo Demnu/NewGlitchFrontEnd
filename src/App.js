@@ -10,6 +10,7 @@ import MobileDashboard from "./Components/Dashboard/MobileDashboard";
 import Calculation from "./Components/Calculations/Calculation/Calculation";
 import Topbar from "./Components/Dashboard/Topbar";
 import NewRecipe from "./Components/Recipes/NewRecipe/NewRecipe";
+import RecipeCode from "./Components/RecipeCodes/RecipeCode/RecipeCode";
 import Analytics from "./Components/Analytics/Analytics";
 import LoginPage from "./Components/Login/LoginPage";
 import RequireAuth from "./RequireAuth";
@@ -150,6 +151,15 @@ function App() {
                     element={
                       <RequireAuth>
                         <NewRecipeCode />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/codes/:recipeCodeID"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <RecipeCode />
                       </RequireAuth>
                     }
                   />

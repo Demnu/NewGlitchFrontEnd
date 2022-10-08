@@ -46,7 +46,7 @@ const CalculationTitleAlert = ({ title, description, cancel, mutation }) => {
                 <button
                   type="submit"
                   onClick={(event) => {
-
+                    event.preventDefault();
                     if (tempInput.trim().length > 0) {
                       mutation.mutate(tempInput);
                       cancel();

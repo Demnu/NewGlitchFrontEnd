@@ -9,10 +9,10 @@ const getOrders = async (params) => {
   const response = await instance.get("/orders");
   return response;
 };
-const updateOrder = async (params) =>{
-  const response = await instance.post("/orders",params)
+const updateOrder = async (params) => {
+  const response = await instance.post("/orders", params);
   return response;
-}
+};
 
 const makeCalculation = async (params) => {
   const response = await instance.post("/roasting/makeCalculation", {
@@ -43,16 +43,12 @@ const saveCalculation = async ({ title, orderIDs, products, beans }) => {
 };
 
 const getCalculations = async (params) => {
-
   const response = await instance.get("/roasting");
   return response;
 };
 
 const deleteCalculation = async (params) => {
-
-  const response = await instance.delete(
-    "/roasting/" + params.calculationID
-  );
+  const response = await instance.delete("/roasting/" + params.calculationID);
   return response;
 };
 
@@ -81,49 +77,63 @@ const updateRecipe = async (params) => {
     bean7Amount: params.bean7Amount,
     bean8Name: params.bean8Name,
     bean8Amount: params.bean8Amount,
-  })
-  return response
-}
+  });
+  return response;
+};
 const deleteRecipe = async (params) => {
   const response = await instance.delete("/recipes/" + params);
-  return response
-}
+  return response;
+};
 
 const getUnusedProducts = async () => {
   const response = await instance.get("/products/unusedProducts");
-  return response
-}
+  return response;
+};
 
 const saveRecipe = async (params) => {
-  const response = await instance.post("/recipes", { params })
-  return response
-}
+  const response = await instance.post("/recipes", { params });
+  return response;
+};
 
 const login = async (params) => {
-  const response = await instance.post("/user/login", { email: params.email, password: params.password })
-  return response
-}
+  const response = await instance.post("/user/login", {
+    email: params.email,
+    password: params.password,
+  });
+  return response;
+};
 
 const authenticate = async () => {
-  const response = await instance.get("/user/authenticate")
-  return response
-}
+  const response = await instance.get("/user/authenticate");
+  return response;
+};
 
 const logoutServer = async () => {
-  const response = await instance.post("/user/logout")
-  return response
-}
+  const response = await instance.post("/user/logout");
+  return response;
+};
 
-const getRecipeCodes = async()=>{
+const getRecipeCodes = async () => {
   const response = await instance.get("/recipeCodes");
   return response;
-}
+};
 
-const createRecipeCode = async(params)=>{
-  const response = await instance.post("/recipeCodes", params)
-  return response
-}
+const createRecipeCode = async (params) => {
+  const response = await instance.post("/recipeCodes", params);
+  return response;
+};
 
+const deleteRecipeCode = async (params) => {
+  console.log(params);
+  const response = await instance.delete("/recipeCodes/" + params);
+  return response;
+};
+
+const updateRecipeCode = async (params) => {
+  const response = await instance.patch("/recipeCodes", params);
+  console.log(response);
+  return response;
+};
 
 export {
   getOrders,
@@ -141,5 +151,7 @@ export {
   authenticate,
   logoutServer,
   getRecipeCodes,
-  createRecipeCode
+  createRecipeCode,
+  deleteRecipeCode,
+  updateRecipeCode,
 };

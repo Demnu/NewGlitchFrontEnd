@@ -19,7 +19,8 @@ const NewRecipeCode = () => {
     setBlendName(e.target.value);
   };
 
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
     if (blendName.trim().length == 0 || code.trim().length == 0) {
       setError(true);
     } else {
@@ -34,11 +35,18 @@ const NewRecipeCode = () => {
 
   const saveNewRecipeCode = useMutation(
     () => {
-      return createRecipeCode({ code: code, blendName: blendName });
+      return createRecipeCode({
+        code: code.trim(),
+        blendName: blendName.trim(),
+      });
     },
     {
       onError: (e) => {
         setErrorMsg(e.response.data);
+      },
+      onSuccess: (e) => {
+        setCode("");
+        setBlendName("");
       },
     }
   );
@@ -58,57 +66,60 @@ const NewRecipeCode = () => {
             <h2 className=" w-48 text-center">Code</h2>
             <h2 className=" w-48 text-center">Blend Name</h2>
           </div>
-          <div className="mb-2 flex w-min gap-2 rounded-sm py-1">
-            <div className="flex gap-2">
-              <input
-                onChange={codeInputHandler}
-                value={code}
-                className={`border bg-white ${
-                  !error
-                    ? "border-gray-300 hover:border-blue-300 focus:border-blue-500"
-                    : "hover:border-bg-red-300 border-red-500 focus:border-red-600"
-                }   w-48 rounded-md p-3 focus:outline-none `}
-              />
-              <input
-                onChange={blendNameInputHandler}
-                value={blendName}
-                className={`border bg-white ${
-                  !error
-                    ? "border-gray-300 hover:border-blue-300 focus:border-blue-500"
-                    : "hover:border-bg-red-300 border-red-500 focus:border-red-600"
-                }   w-48 rounded-md p-3 focus:outline-none `}
-              />
+          <form>
+            <div className="mb-2 flex w-min gap-2 rounded-sm py-1">
+              <div className="flex gap-2">
+                <input
+                  onChange={codeInputHandler}
+                  value={code}
+                  className={`border bg-white ${
+                    !error
+                      ? "border-gray-300 hover:border-blue-300 focus:border-blue-500"
+                      : "hover:border-bg-red-300 border-red-500 focus:border-red-600"
+                  }   w-48 rounded-md p-3 focus:outline-none `}
+                />
+                <input
+                  onChange={blendNameInputHandler}
+                  value={blendName}
+                  className={`border bg-white ${
+                    !error
+                      ? "border-gray-300 hover:border-blue-300 focus:border-blue-500"
+                      : "hover:border-bg-red-300 border-red-500 focus:border-red-600"
+                  }   w-48 rounded-md p-3 focus:outline-none `}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="flex flex-grow flex-col gap-2">
-            <div style={{ width: "392px" }} className="flex  gap-2">
-              <button
-                onClick={submitHandler}
-                className=" h-10 w-1/3 flex-grow justify-center rounded-sm bg-blue-700  px-1 text-white hover:bg-blue-500"
-              >
-                Save
-              </button>
+            <div className="flex flex-grow flex-col gap-2">
+              <div style={{ width: "392px" }} className="flex  gap-2">
+                <button
+                  type="submit"
+                  onClick={submitHandler}
+                  className=" h-10 w-1/3 flex-grow justify-center rounded-sm bg-blue-700  px-1 text-white hover:bg-blue-500"
+                >
+                  Save
+                </button>
 
-              <button
-                onClick={resetClickHandler}
-                className={` hover: } h-10 w-1/3 flex-grow justify-center rounded-sm  bg-zinc-300 px-1 text-black
+                <button
+                  onClick={resetClickHandler}
+                  className={` hover: } h-10 w-1/3 flex-grow justify-center rounded-sm  bg-zinc-300 px-1 text-black
               hover:bg-zinc-100 `}
-              >
-                Reset
-              </button>
+                >
+                  Reset
+                </button>
+              </div>
+              {saveNewRecipeCode.isSuccess && (
+                <div style={{ width: "392px" }}>
+                  <Notification msg={`Recipe code saved!`} />
+                </div>
+              )}
+              {errorMsg.length > 0 && (
+                <div style={{ width: "392px" }}>
+                  <Notification msg={errorMsg} error={true} noTimeout={true} />
+                </div>
+              )}
             </div>
-            {saveNewRecipeCode.isSuccess && (
-              <div style={{ width: "392px" }}>
-                <Notification msg={`Recipe code saved!`} />
-              </div>
-            )}
-            {errorMsg.length > 0 && (
-              <div style={{ width: "392px" }}>
-                <Notification msg={errorMsg} error={true} noTimeout={true} />
-              </div>
-            )}
-          </div>
+          </form>
         </div>
       </div>
     </>
