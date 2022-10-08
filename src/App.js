@@ -101,10 +101,9 @@ function App() {
               )}
 
               <div
-                className={`${
-                  loggedIn &&
+                className={`${loggedIn &&
                   "flex-grow overflow-x-auto overflow-y-auto bg-zinc-200 "
-                }`}
+                  }`}
               >
                 <Routes>
                   <Route

@@ -9,6 +9,10 @@ const getOrders = async (params) => {
   const response = await instance.get("/orders");
   return response;
 };
+const updateOrder = async (params) =>{
+  const response = await instance.post("/orders",params)
+  return response;
+}
 
 const makeCalculation = async (params) => {
   const response = await instance.post("/roasting/makeCalculation", {
@@ -110,8 +114,11 @@ const logoutServer = async () => {
   return response
 }
 
+
+
 export {
   getOrders,
+  updateOrder,
   makeCalculation,
   saveCalculation,
   getCalculations,

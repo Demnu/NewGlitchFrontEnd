@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import axios from "axios";
 import CalculateButton from "./CalculateButton";
-import { getCalculations, getOrders } from "../../myApi";
+import { getOrders, updateOrder } from "../../myApi";
 import RoastingList from "./RoastingList/RoastingList";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import StarOutlineRoundedIcon from "@mui/icons-material/StarOutlineRounded";
+import StarRoundedIcon from "@mui/icons-material/StarRounded";
 const Orders = ({ selectLink }) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [showRoastingList, setShowRoastingList] = useState(false);
@@ -22,7 +23,34 @@ const Orders = ({ selectLink }) => {
     setSelectedOrders(item);
   };
 
+  const updateLastOrderMutation = useMutation((params) => {
+    console.log(params);
+    return updateOrder(params);
+  });
+
   const columns = [
+    {
+      field: "lastOrder",
+      headerName: <StarOutlineRoundedIcon />,
+      width: 20,
+      renderCell: (params) => {
+        return (
+          <button
+            className=" flex h-full w-full items-center  "
+            onClick={(e) => {
+              params.row.lastOrder = !params.row.lastOrder;
+              updateLastOrderMutation.mutate({
+                id: params.row.id,
+                lastOrder: params.row.lastOrder,
+              });
+            }}
+          >
+            {params.row.lastOrder == true && <StarRoundedIcon />}
+          </button>
+        );
+      },
+    },
+
     { field: "id", headerName: "Order ID", width: 90 },
 
     {
@@ -79,6 +107,7 @@ const Orders = ({ selectLink }) => {
             rows={orders}
             columns={columns}
             checkboxSelection
+            disableSelectionOnClick
             density="compact"
             onSelectionModelChange={(item) => handleSelection(item)}
           />
