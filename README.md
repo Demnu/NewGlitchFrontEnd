@@ -1,4 +1,7 @@
 
 ## Libraries
+- React
+- react-query
+- MUI Datagrid
+- Tailwind
 
-UI Framework: Tailwind CSS
