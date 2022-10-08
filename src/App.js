@@ -41,7 +41,7 @@ import UserContext from "./Store/UserContext";
 const queryClient = new QueryClient();
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   const logout = () => {
     const response = logoutServer();
