@@ -14,6 +14,7 @@ import RecipeCode from "./Components/RecipeCodes/RecipeCode/RecipeCode";
 import Analytics from "./Components/Analytics/Analytics";
 import LoginPage from "./Components/Login/LoginPage";
 import RequireAuth from "./RequireAuth";
+import Blends from "./Components/Blends/Blends";
 import { useLocation } from "react-router-dom";
 
 import {
@@ -30,8 +31,10 @@ import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 // import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AutoGraphIcon from "@mui/icons-material/AutoGraph";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LocalCafeRoundedIcon from "@mui/icons-material/LocalCafeRounded";
 import {
   authenticate,
+  getBlends,
   getCalculations,
   getOrders,
   getRecipeCodes,
@@ -43,6 +46,7 @@ import {
 import UserContext from "./Store/UserContext";
 import RecipeCodes from "./Components/RecipeCodes/RecipeCodes";
 import NewRecipeCode from "./Components/RecipeCodes/newCode/NewRecipeCode";
+import NewBlend from "./Components/Blends/NewBlend/NewBlend";
 const queryClient = new QueryClient();
 
 function App() {
@@ -59,6 +63,7 @@ function App() {
     { title: "Calculations", icon: CalculateIcon, selected: false },
     { title: "Recipes", icon: MenuBookIcon, selected: false },
     { title: "Codes", icon: FormatListNumberedIcon, selected: false },
+    { title: "Blends", icon: LocalCafeRoundedIcon, selected: false },
     // { title: "Products", icon: ShoppingBagIcon, selected: false },
     { title: "Analytics", icon: AutoGraphIcon, selected: false },
     { title: "Logout", icon: LogoutIcon, selected: false },
@@ -137,32 +142,7 @@ function App() {
                       </RequireAuth>
                     }
                   />
-                  <Route
-                    path="/codes"
-                    element={
-                      <RequireAuth>
-                        <RecipeCodes selectLink={selectLink} />
-                      </RequireAuth>
-                    }
-                  />
-                  <Route
-                    path="/codes/newRecipeCode"
-                    selectLink={selectLink}
-                    element={
-                      <RequireAuth>
-                        <NewRecipeCode />
-                      </RequireAuth>
-                    }
-                  />
-                  <Route
-                    path="/codes/:recipeCodeID"
-                    selectLink={selectLink}
-                    element={
-                      <RequireAuth>
-                        <RecipeCode />
-                      </RequireAuth>
-                    }
-                  />
+
                   <Route
                     path="/calculations/:calculationID"
                     element={
@@ -207,6 +187,58 @@ function App() {
                       </RequireAuth>
                     }
                   />
+                  <Route
+                    path="/blends"
+                    element={
+                      <RequireAuth>
+                        <Blends selectLink={selectLink} />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/blends/newBlend"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <NewBlend />
+                      </RequireAuth>
+                    }
+                  />
+                  {/* <Route
+                    path="/codes/:recipeCodeID"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <Blend />
+                      </RequireAuth>
+                    }
+                  /> */}
+                  <Route
+                    path="/codes"
+                    element={
+                      <RequireAuth>
+                        <RecipeCodes selectLink={selectLink} />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/codes/newRecipeCode"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <NewRecipeCode />
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path="/codes/:recipeCodeID"
+                    selectLink={selectLink}
+                    element={
+                      <RequireAuth>
+                        <RecipeCode />
+                      </RequireAuth>
+                    }
+                  />
                   <Route path="*" element={<Navigate to="/orders" />} />
                 </Routes>
               </div>
@@ -226,6 +258,7 @@ const PrefetchData = () => {
     queryClient.prefetchQuery(["calculations"], getCalculations, {
       staleTime: 180000,
     });
+    queryClient.prefetchQuery(["blends"], getBlends, { staleTime: 180000 });
     queryClient.prefetchQuery(["codes"], getRecipeCodes, { staleTime: 180000 });
     queryClient.prefetchQuery(["recipes"], getRecipes, { staleTime: 180000 });
     queryClient.prefetchQuery(["orders"], getOrders, { staleTime: 180000 });

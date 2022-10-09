@@ -113,6 +113,28 @@ const logoutServer = async () => {
   return response;
 };
 
+const getBlends = async () => {
+  const response = await instance.get("/blends");
+  return response;
+};
+
+const createBlend = async (params) => {
+  const response = await instance.post("/blends", params);
+  return response;
+};
+
+const deleteBlend = async (params) => {
+  console.log(params);
+  const response = await instance.delete("/blends/" + params);
+  return response;
+};
+
+const updateBlend = async (params) => {
+  const response = await instance.patch("/blends", params);
+  console.log(response);
+  return response;
+};
+
 const getRecipeCodes = async () => {
   const response = await instance.get("/recipeCodes");
   return response;
@@ -150,6 +172,10 @@ export {
   login,
   authenticate,
   logoutServer,
+  getBlends,
+  createBlend,
+  deleteBlend,
+  updateBlend,
   getRecipeCodes,
   createRecipeCode,
   deleteRecipeCode,
