@@ -14,7 +14,6 @@ const BeanTable = ({ beans, loading }) => {
     if ((bean.id || bean.name) && bean.amount !== null) {
       let newBeanAmount;
       if (isNaN(bean.amount)) {
-        console.log("!!!!");
         newBeanAmount = Number(bean.amount.replace(" kg", ""));
         newBeanAmount = newBeanAmount.toFixed(2);
       } else {

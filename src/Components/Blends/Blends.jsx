@@ -6,7 +6,7 @@ import BlendTable from "./BlendTable";
 const Blends = () => {
   const navigate = useNavigate();
 
-  const { isLoading, data } = useQuery(["codes"], getBlends);
+  const { isLoading, data } = useQuery(["blends"], getBlends);
   return (
     <div className="restOfScreenHeight flex flex-col p-2 ">
       <button
@@ -18,7 +18,7 @@ const Blends = () => {
         New Blend
       </button>
       <div className=" flex-grow cursor-pointer bg-white">
-        <BlendTable recipes={data?.data || []} loading={isLoading} />
+        <BlendTable blends={data?.data || []} loading={isLoading} />
       </div>
     </div>
   );

@@ -8,7 +8,6 @@ const RecipeCode = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log(location.state);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -38,13 +37,11 @@ const RecipeCode = () => {
     setBlendName(location.state.blendName);
   };
   const deleteHandler = () => {
-    console.log("here");
     deleteRecipeCodeMutation.mutate();
   };
 
   const deleteRecipeCodeMutation = useMutation(
     () => {
-      console.log("here");
       return deleteRecipeCode(location.state.id);
     },
     {

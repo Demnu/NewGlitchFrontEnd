@@ -39,6 +39,7 @@ import {
   getOrders,
   getRecipeCodes,
   getRecipes,
+  getUnassignedRecipes,
   getUnusedProducts,
   logoutServer,
 } from "./myApi";
@@ -47,6 +48,7 @@ import UserContext from "./Store/UserContext";
 import RecipeCodes from "./Components/RecipeCodes/RecipeCodes";
 import NewRecipeCode from "./Components/RecipeCodes/newCode/NewRecipeCode";
 import NewBlend from "./Components/Blends/NewBlend/NewBlend";
+import Blend from "./Components/Blends/Blend/Blend";
 const queryClient = new QueryClient();
 
 function App() {
@@ -204,15 +206,15 @@ function App() {
                       </RequireAuth>
                     }
                   />
-                  {/* <Route
-                    path="/codes/:recipeCodeID"
+                  <Route
+                    path="/blends/:blendID"
                     selectLink={selectLink}
                     element={
                       <RequireAuth>
                         <Blend />
                       </RequireAuth>
                     }
-                  /> */}
+                  />
                   <Route
                     path="/codes"
                     element={
@@ -259,6 +261,7 @@ const PrefetchData = () => {
       staleTime: 180000,
     });
     queryClient.prefetchQuery(["blends"], getBlends, { staleTime: 180000 });
+
     queryClient.prefetchQuery(["codes"], getRecipeCodes, { staleTime: 180000 });
     queryClient.prefetchQuery(["recipes"], getRecipes, { staleTime: 180000 });
     queryClient.prefetchQuery(["orders"], getOrders, { staleTime: 180000 });

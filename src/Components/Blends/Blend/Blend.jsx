@@ -1,20 +1,36 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { createBlend, getUnassignedRecipes } from "../../../myApi";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  createBlend,
+  deleteBlend,
+  getUnassignedRecipes,
+  updateBlend,
+} from "../../../myApi";
 import Notification from "../../UI/Notification";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect } from "react";
 const columns = [{ field: "id", headerName: "Recipe", width: 300 }];
-const NewBlend = () => {
+const Blend = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [blendName, setBlendName] = useState("");
   const [recipesInBlend, setRecipesInBlend] = useState([]);
   const [loadingRecipes, setLoadingRecipes] = useState(true);
+  const [recipesToBeRemoved, setRecipesToBeRemoved] = useState([]);
   const [recipes, setRecipes] = useState([]);
-  const [changeRecipes, setChangeRecipes] = useState(true);
+  const [changeRecipes, setChangeRecipes] = useState(false);
 
   useEffect(() => {
+    if (location?.state?.name) {
+      setBlendName(location.state.name);
+      setRecipesInBlend(location.state.recipes);
+    } else {
+      navigate("/blends");
+    }
+
     const response = getUnassignedRecipes();
     response.then((e) => {
       let tempRecipes = e.data;
@@ -25,6 +41,25 @@ const NewBlend = () => {
       setRecipes(e.data);
     });
   }, []);
+
+  const undoChangesHandler = (e) => {
+    setLoadingRecipes(true);
+    const response = getUnassignedRecipes();
+
+    response.then((e) => {
+      let tempRecipes = e.data;
+      tempRecipes.sort((a, b) => {
+        return String(a.id).localeCompare(b.id);
+      });
+      setLoadingRecipes(false);
+      setRecipes(e.data);
+    });
+    e.preventDefault();
+    if (location.state.name) {
+      setBlendName(location.state.name);
+      setRecipesInBlend(location.state.recipes);
+    }
+  };
 
   const blendNameInputHandler = (e) => {
     setErrorMsg("");
@@ -37,31 +72,33 @@ const NewBlend = () => {
     if (blendName.trim().length == 0) {
       setError(true);
     } else {
-      saveNewBlendMutation.mutate();
+      //check if any recipes have been removed
+      let prevRecipes = location.state.recipes;
+      let removedRecipes = [];
+      for (let prevPrecipe of prevRecipes) {
+        let found = false;
+        for (let currentRecipe of recipesInBlend) {
+          if (prevPrecipe == currentRecipe) {
+            found = true;
+            break;
+          }
+        }
+        if (!found) {
+          removedRecipes.push(prevPrecipe);
+        }
+      }
+      setRecipesToBeRemoved(removedRecipes);
+      updateBlendMutation.mutate(removedRecipes);
     }
   };
 
-  const resetClickHandler = (e) => {
-    e.preventDefault();
-    setBlendName("");
-    setRecipesInBlend([]);
-    setLoadingRecipes(true);
-    const response = getUnassignedRecipes();
-    response.then((e) => {
-      let tempRecipes = e.data;
-      tempRecipes.sort((a, b) => {
-        return String(a.id).localeCompare(b.id);
-      });
-      setLoadingRecipes(false);
-      setRecipes(e.data);
-    });
-  };
-
-  const saveNewBlendMutation = useMutation(
-    () => {
-      return createBlend({
+  const updateBlendMutation = useMutation(
+    (removedRecipes) => {
+      return updateBlend({
+        id: location.state.id,
         name: blendName.trim(),
         recipes: recipesInBlend,
+        recipesRemoved: removedRecipes,
       });
     },
     {
@@ -69,8 +106,9 @@ const NewBlend = () => {
         setErrorMsg(e.response.data);
       },
       onSuccess: (e) => {
-        setBlendName("");
-        setRecipesInBlend([]);
+        location.state.recipes = recipesInBlend;
+        location.state.name = blendName;
+        setChangeRecipes(false);
       },
     }
   );
@@ -94,6 +132,21 @@ const NewBlend = () => {
       return newRecipes;
     });
   };
+  const deleteBlendMutation = useMutation(
+    () => {
+      return deleteBlend({
+        id: location.state.id,
+      });
+    },
+    {
+      onError: (e) => {
+        setErrorMsg(e.response.data);
+      },
+      onSuccess: (e) => {
+        navigate("/blends");
+      },
+    }
+  );
 
   const addRecipeToBlendHandler = (e) => {
     setRecipesInBlend((prevRecipes) => {
@@ -151,20 +204,30 @@ const NewBlend = () => {
                   onClick={submitHandler}
                   className=" h-10 w-1/3 flex-grow justify-center rounded-sm bg-blue-700  px-1 text-white hover:bg-blue-500"
                 >
-                  Save
+                  Update
                 </button>
 
                 <button
-                  onClick={resetClickHandler}
+                  onClick={undoChangesHandler}
                   className={` hover: } h-10 w-1/3 flex-grow justify-center rounded-sm  bg-zinc-300 px-1 text-black
               hover:bg-zinc-100 `}
                 >
-                  Reset
+                  Undo Changes
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    deleteBlendMutation.mutate();
+                  }}
+                  className={` hover: } h-10 w-1/3 flex-grow justify-center rounded-sm  bg-red-700 px-1 text-white
+              hover:bg-red-500 `}
+                >
+                  Delete
                 </button>
               </div>
-              {saveNewBlendMutation.isSuccess && (
+              {updateBlendMutation.isSuccess && (
                 <div className=" w-96">
-                  <Notification msg={`Blend saved!`} />
+                  <Notification msg={`Blend updated!`} />
                 </div>
               )}
               {errorMsg.length > 0 && (
@@ -201,9 +264,10 @@ const NewBlend = () => {
           <div className="h-full">
             <DataGrid
               onRowClick={(e) => {
-                removeRecipeFromBlendHandler(e);
+                if (changeRecipes) {
+                  removeRecipeFromBlendHandler(e);
+                }
               }}
-              loading={loadingRecipes}
               rows={recipesInBlend || []}
               columns={columns}
               disableSelectionOnClick={true}
@@ -215,4 +279,4 @@ const NewBlend = () => {
     </>
   );
 };
-export default NewBlend;
+export default Blend;

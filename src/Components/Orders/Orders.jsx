@@ -27,7 +27,6 @@ const Orders = ({ selectLink }) => {
   };
 
   const updateLastOrderMutation = useMutation((params) => {
-    console.log(params);
     return updateOrder(params);
   });
 

@@ -124,14 +124,16 @@ const createBlend = async (params) => {
 };
 
 const deleteBlend = async (params) => {
-  console.log(params);
-  const response = await instance.delete("/blends/" + params);
+  const response = await instance.delete("/blends/" + params.id);
   return response;
 };
 
 const updateBlend = async (params) => {
   const response = await instance.patch("/blends", params);
-  console.log(response);
+  return response;
+};
+const getUnassignedRecipes = async () => {
+  const response = await instance.get("/recipes/unassignedRecipes");
   return response;
 };
 
@@ -146,14 +148,12 @@ const createRecipeCode = async (params) => {
 };
 
 const deleteRecipeCode = async (params) => {
-  console.log(params);
   const response = await instance.delete("/recipeCodes/" + params);
   return response;
 };
 
 const updateRecipeCode = async (params) => {
   const response = await instance.patch("/recipeCodes", params);
-  console.log(response);
   return response;
 };
 
@@ -180,4 +180,5 @@ export {
   createRecipeCode,
   deleteRecipeCode,
   updateRecipeCode,
+  getUnassignedRecipes,
 };
