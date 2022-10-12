@@ -1,13 +1,9 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { useLocation } from "react-router-dom";
-import BeanTable from "../../Orders/RoastingList/Tables/BeanTable";
-import ProductTable from "../../Orders/RoastingList/Tables/ProductTable";
-import OrderTable from "../../Orders/RoastingList/Tables/OrderTable";
+import { useNavigate, useLocation } from "react-router-dom";
 import CalculationDesktop from "./CalculationDesktop";
-import { useQueryClient } from "@tanstack/react-query";
 const calculationReducer = (state, action) => {
   switch (action.type) {
-    case "setAllFromRedirect":
+    case "setAllFromCalculationList":
       return {
         _id: action.payload._id,
         title: action.payload.title,
@@ -15,6 +11,18 @@ const calculationReducer = (state, action) => {
         orderIDs: action.payload.orderIDs,
         beans: action.payload.beans,
         products: action.payload.products,
+        roastingCalculation: action.payload.roastingCalculation,
+      };
+    case "setAllFromSaveCalculation":
+      console.log(action.payload);
+      return {
+        _id: action.payload.id,
+        title: action.payload.title,
+        date: action.payload.date,
+        orderIDs: action.payload.orderIDs,
+        beans: action.payload.beans,
+        products: action.payload.products,
+        roastingCalculation: action.payload.roastingCalculation,
       };
   }
 };
@@ -26,9 +34,7 @@ function getWindowDimensions() {
   };
 }
 const Calculation = () => {
-  // const queryClient = useQueryClient();
-  // const calculationsQuery = queryClient.getQueryData(["calculations"]);
-
+  const navigate = useNavigate();
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
@@ -40,20 +46,24 @@ const Calculation = () => {
     orderIDs: [],
     beans: [],
     products: [],
+    roastingCalculation: [],
   });
 
   useEffect(() => {
-    // const calcID = String(location.pathname).replace("/calculations/", "");
-    // const calc = calculationsQuery?.data.find((calc) => {
-    //   return (calc.id = calcID);
-    // });
     setWindowDimensions(getWindowDimensions());
-    if (location.state) {
+    console.log(location.state);
+    if (location.state?.obj) {
       calculationDispatch({
-        type: "setAllFromRedirect",
+        type: "setAllFromSaveCalculation",
+        payload: location.state.obj,
+      });
+    } else if (location?.state) {
+      calculationDispatch({
+        type: "setAllFromCalculationList",
         payload: location.state,
       });
     } else {
+      navigate("/calculations");
     }
   }, []);
   return (

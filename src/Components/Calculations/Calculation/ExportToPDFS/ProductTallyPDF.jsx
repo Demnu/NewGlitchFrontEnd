@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import ExportButton from "./ExportButton";
 
-const ProductTallyPDF = ({ products }) => {
-  const [dataObject, setDataObject] = useState();
+const ProductTallyPDF = ({ products, title }) => {
   const exportPDF = () => {
     const unit = "pt";
     const size = "A4"; // Use A1, A2, A3 or A4
@@ -15,7 +14,7 @@ const ProductTallyPDF = ({ products }) => {
 
     doc.setFontSize(15);
 
-    const title = "Product Tally";
+    const titlePDF = "Product Tally: " + title;
     const headers = [["Product", "Amount"]];
     const data = products.map((row) => [row.id, row.amount]);
     let content = {
@@ -30,7 +29,7 @@ const ProductTallyPDF = ({ products }) => {
 
     let newdate = day + "/" + month + "/" + year;
 
-    doc.text(title, marginLeft, 40);
+    doc.text(titlePDF, marginLeft, 40);
     doc.autoTable(content);
     doc.save("Product_Tally_" + newdate + ".pdf");
   };

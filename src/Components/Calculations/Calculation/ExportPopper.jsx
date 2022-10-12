@@ -20,20 +20,21 @@ const ExportPopper = (props) => {
   return (
     <div>
       <button
-        className=" w-30 rounded-sm bg-blue-700 px-2 py-2 text-white hover:bg-blue-500"
+        className=" w-52 rounded-sm bg-blue-700 px-2 py-2 text-white hover:bg-blue-500"
         aria-describedby={id}
         onClick={handleClick}
       >
         Export PDF's
       </button>
+
       <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: "middle",
+          horizontal: "right",
         }}
       >
         {props.children}

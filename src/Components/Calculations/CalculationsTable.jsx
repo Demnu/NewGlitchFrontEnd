@@ -6,11 +6,17 @@ import { DataGrid } from "@mui/x-data-grid";
 const columns = [
   { field: "title", headerName: "Calculation", width: 300 },
   { field: "date", headerName: "Date Added", width: 300 },
+  {
+    field: "calculatedRoastingList",
+    headerName: "Roasting List Calculated",
+    width: 300,
+  },
 ];
 
 const CalculationsTable = ({ loading, calcs }) => {
   const navigate = useNavigate();
   const calculationClickHander = (e) => {
+    console.log(e);
     navigate("/calculations/" + String(e.id), {
       state: {
         _id: e.id,
@@ -19,6 +25,7 @@ const CalculationsTable = ({ loading, calcs }) => {
         orderIDs: e.row.orderIDs,
         products: e.row.products,
         beans: e.row.beans,
+        roastingCalculation: e.row.roastingCalculation,
       },
     });
   };

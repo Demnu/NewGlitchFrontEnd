@@ -3,7 +3,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import ExportButton from "./ExportButton";
 
-const BeansListPDF = ({ beans }) => {
+const BeansListPDF = ({ beans, title }) => {
   const [dataObject, setDataObject] = useState();
   const exportPDF = () => {
     const unit = "pt";
@@ -15,7 +15,7 @@ const BeansListPDF = ({ beans }) => {
 
     doc.setFontSize(15);
 
-    const title = "Roasting List";
+    const titlePDF = "Beans Tally: " + title;
     const headers = [["Bean", "Amount(kg)"]];
     const data = dataObject.map((row) => [row.id, row.amount]);
     let content = {
@@ -30,7 +30,7 @@ const BeansListPDF = ({ beans }) => {
 
     let newdate = day + "/" + month + "/" + year;
 
-    doc.text(title, marginLeft, 40);
+    doc.text(titlePDF, marginLeft, 40);
     doc.autoTable(content);
     doc.save("Roasting_List_" + newdate + ".pdf");
   };
@@ -52,7 +52,7 @@ const BeansListPDF = ({ beans }) => {
   }, []);
   return (
     <ExportButton className="" onClick={exportPDF}>
-      Beans List
+      Beans Tally
     </ExportButton>
   );
 };

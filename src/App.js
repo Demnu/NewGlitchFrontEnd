@@ -52,7 +52,7 @@ import Blend from "./Components/Blends/Blend/Blend";
 const queryClient = new QueryClient();
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const logout = () => {
     const response = logoutServer();
@@ -64,7 +64,7 @@ function App() {
     { title: "Orders", icon: ReceiptIcon, selected: false },
     { title: "Calculations", icon: CalculateIcon, selected: false },
     { title: "Recipes", icon: MenuBookIcon, selected: false },
-    { title: "Codes", icon: FormatListNumberedIcon, selected: false },
+    // { title: "Codes", icon: FormatListNumberedIcon, selected: false },
     { title: "Blends", icon: LocalCafeRoundedIcon, selected: false },
     // { title: "Products", icon: ShoppingBagIcon, selected: false },
     { title: "Analytics", icon: AutoGraphIcon, selected: false },

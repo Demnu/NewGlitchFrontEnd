@@ -137,6 +137,23 @@ const getUnassignedRecipes = async () => {
   return response;
 };
 
+const calculateRoastingList = async (params) => {
+  const response = await instance.post(
+    "/roasting/calculateRoastingList",
+    params
+  );
+  return response;
+};
+
+const saveRoastingCalculation = async (params) => {
+  console.log(params);
+  const response = await instance.patch(
+    "/roasting/calculateRoastingList",
+    params
+  );
+  return response;
+};
+
 const getRecipeCodes = async () => {
   const response = await instance.get("/recipeCodes");
   return response;
@@ -181,4 +198,6 @@ export {
   deleteRecipeCode,
   updateRecipeCode,
   getUnassignedRecipes,
+  calculateRoastingList,
+  saveRoastingCalculation,
 };

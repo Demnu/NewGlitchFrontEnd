@@ -5,12 +5,9 @@ import { makeCalculation, saveCalculation } from "../../../myApi";
 import BeanTable from "./Tables/BeanTable";
 import OrderTable from "./Tables/OrderTable";
 import ProductTable from "./Tables/ProductTable";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
 import TablePickerButton from "./TablePickerButton";
 import { useReducer } from "react";
 import CalculationTitleAlert from "./CalculationTitleAlert";
-import userEvent from "@testing-library/user-event";
 import RoastingListDesktop from "./RoastingListDesktop";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 function getWindowDimensions() {
@@ -60,6 +57,10 @@ const DisplayTableReducer = (state, action) => {
   }
 };
 const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
+  const [beans, setBeans] = useState([]);
+  const [title, setTitle] = useState([]);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const calculationsQuery = queryClient.getQueryData(["calculations"]);
@@ -67,10 +68,7 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
   const saveCalculationHandler = () => {
     setSavingCalculation(true);
   };
-  const [saveCalculationButtonTitle, setSaveCalculationButtonTitle] =
-    useState("Save Calculation");
-  const [saveCalculationButtonDisabled, setSaveCalculationButtonDisabled] =
-    useState(true);
+
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions()
   );
@@ -91,56 +89,38 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const saveCalculationMutation = useMutation(
-    (title) => {
-      saveCalculation({
-        title: title,
-        orderIDs: selectedOrders,
-        products,
-        beans,
-      }).then((response) => {
-        const results = response.data;
-        let date = new Date();
+  const saveCalculationMutation = useMutation(() => {
+    saveCalculation({
+      title: title,
+      orderIDs: selectedOrders,
+      products,
+      beans,
+    }).then((response) => {
+      const results = response.data;
+      let date = new Date();
 
-        let obj = {
-          id: results._id,
-          title: results.title,
-          date: date.toLocaleDateString() + " " + date.toLocaleTimeString(),
-          orderIDs: results.orderIDs,
-          products: results.products,
-          beans: results.beans,
-        };
+      let obj = {
+        id: results._id,
+        title: results.title,
+        date: date.toLocaleDateString() + " " + date.toLocaleTimeString(),
+        orderIDs: results.orderIDs,
+        products: results.products,
+        beans: results.beans,
+        roastingCalculation: [],
+      };
+      console.log(obj);
+      try {
         calculationsQuery.data.push(obj);
-        navigate("/calculations/" + String(results._id), {
-          state: {
-            _id: results._id,
-            title: results.title,
-            date: results.date,
-            orderIDs: results.orderIDs,
-            products: results.products,
-            beans: results.beans,
-          },
-        });
-      });
-    },
-    {
-      onMutate: () => {
-        setSaveCalculationButtonDisabled(true);
-        setSaveCalculationButtonTitle("SAVING CALCULATION");
-      },
-    }
-  );
-
-  const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([]);
-  const [beans, setBeans] = useState([]);
+      } catch (e) {}
+      navigate("/calculations/" + String(results._id), { state: { obj } });
+    });
+  });
 
   useEffect(() => {
     const res = makeCalculation(selectedOrders);
     res.then((result) => {
       const data = result.data;
       setLoading(false);
-      setSaveCalculationButtonDisabled(false);
       var productsArray = data[1];
       productsArray.sort(compareProducts);
       setProducts(data[1]);
@@ -152,26 +132,18 @@ const RoastingList = ({ selectedOrders, setShowRoastingList }) => {
 
   return (
     <>
-      {savingCalculation && (
-        <CalculationTitleAlert
-          mutation={saveCalculationMutation}
-          title={"Save Calculation"}
-          description="Please enter a calculation title"
-          cancel={setSavingCalculation}
-        />
-      )}
-
       {windowDimensions.width > 1200 && (
         <div className="restOfScreenHeight flex flex-col">
           <RoastingListDesktop
             setShowRoastingList={setShowRoastingList}
-            saveCalculationButtonTitle={saveCalculationButtonTitle}
+            saveCalculationMutation={saveCalculationMutation}
             saveCalculationHandler={saveCalculationHandler}
-            saveCalculationButtonDisabled={saveCalculationButtonDisabled}
             loading={loading}
             products={products}
             selectedOrders={selectedOrders}
             beans={beans}
+            setTitle={setTitle}
+            title={title}
           />
         </div>
       )}
