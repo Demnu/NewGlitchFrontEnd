@@ -5,6 +5,7 @@ import OrderTable from "../../Orders/RoastingList/Tables/OrderTable";
 import BeansListPDF from "./ExportToPDFS/BeansListPDF";
 import ProductTallyPDF from "./ExportToPDFS/ProductTallyPDF";
 import Notification from "../../UI/Notification";
+
 import {
   calculateRoastingList,
   deleteCalculation,
@@ -32,6 +33,7 @@ const CalculationDesktop = ({ calculation }) => {
   const navigate = useNavigate();
 
   const showRoastingCalculation = () => {
+    saveRoastingCalculationMutation.reset();
     setShowRoastingList(true);
   };
   const showSummary = () => {
@@ -59,14 +61,12 @@ const CalculationDesktop = ({ calculation }) => {
       onSettled: () => {
         setChangesMade(false);
         setIsCalculated(true);
-        console.log(blends);
       },
     }
   );
 
   useEffect(() => {
     if (calculation.roastingCalculation.length <= 0) {
-      console.log("NEEDS TO BE CALCULATED");
       const response = calculateRoastingList({
         products: calculation.products,
       });
