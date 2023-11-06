@@ -16,7 +16,7 @@ const Orders = ({ selectLink }) => {
 
   let orders = [];
   if (data) {
-    orders = [...data?.data].reverse();
+    orders = [...data?.data];
   }
   useEffect(() => {
     selectLink("Orders");
@@ -64,6 +64,9 @@ const Orders = ({ selectLink }) => {
       field: "date",
       headerName: "Order Date",
       width: 120,
+      renderCell: (params) => {
+        return <div>{new Date(params.row.date).toLocaleDateString()}</div>;
+      },
     },
     {
       field: "supplierName",
